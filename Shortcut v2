@@ -1,4 +1,4 @@
-print("NewYOOOO55555")
+
 
 -- Step 1: Create the ScreenGui
 local existingScreenGui = game:GetService("CoreGui"):FindFirstChild("ShipuHub")
@@ -318,46 +318,46 @@ TitleFrame.Size = UDim2.new(0.9, 35, 0, 50)
 TitleFrame.Position = UDim2.new(0, 10, 0, 10)
 TitleFrame.Parent = InputFrame
 
--- Create InputIDFrame in InputFrame
-local InputIDFrame = Instance.new("Frame")
-InputIDFrame.Name = "InputIDFrame"
-InputIDFrame.Size = UDim2.new(1, -20, 0, 60)
-InputIDFrame.Position = UDim2.new(0, 10, 0, 70)
-InputIDFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 62)
-InputIDFrame.BorderColor3 = Color3.fromRGB(91, 92, 121)
-InputIDFrame.Parent = InputFrame
+-- Create InputNameFrame in InputFrame
+local InputNameFrame = Instance.new("Frame")
+InputNameFrame.Name = "InputNameFrame"
+InputNameFrame.Size = UDim2.new(1, -20, 0, 60)
+InputNameFrame.Position = UDim2.new(0, 10, 0, 70)
+InputNameFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 62)
+InputNameFrame.BorderColor3 = Color3.fromRGB(91, 92, 121)
+InputNameFrame.Parent = InputFrame
 
--- Apply UICorner to InputIDFrame
-local UICornerID = Instance.new("UICorner")
-UICornerID.CornerRadius = UDim.new(0.2, 0)
-UICornerID.Parent = InputIDFrame
+-- Apply UICorner to InputNameFrame
+local UICornerName = Instance.new("UICorner")
+UICornerName.CornerRadius = UDim.new(0.2, 0)
+UICornerName.Parent = InputNameFrame
 
--- TextLabel in InputIDFrame
-local InputIDLabel = Instance.new("TextLabel")
-InputIDLabel.Text = "Enter ImageID"
-InputIDLabel.Size = UDim2.new(0.9, 35, 0, 20)
-InputIDLabel.Position = UDim2.new(0, 10, 0, 5)
-InputIDLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-InputIDLabel.Font = Enum.Font.GothamBold
-InputIDLabel.TextSize = 14
-InputIDLabel.BackgroundTransparency = 1
-InputIDLabel.Parent = InputIDFrame
+-- TextLabel in InputNameFrame
+local InputNameLabel = Instance.new("TextLabel")
+InputNameLabel.Text = "Enter Script Name"
+InputNameLabel.Size = UDim2.new(0.9, 35, 0, 20)
+InputNameLabel.Position = UDim2.new(0, 10, 0, 5)
+InputNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+InputNameLabel.Font = Enum.Font.GothamBold
+InputNameLabel.TextSize = 14
+InputNameLabel.BackgroundTransparency = 1
+InputNameLabel.Parent = InputNameFrame
 
--- TextBox in InputIDFrame
-local InputIDTextBox = Instance.new("TextBox")
-InputIDTextBox.PlaceholderText = "Paste Here\nRequired (rbxassetid:// or rbxthumb://type=Asset&id)"
-InputIDTextBox.Text = "Paste Here\nRequired (rbxassetid:// or rbxthumb://type=Asset&id)"
-InputIDTextBox.Size = UDim2.new(0.9, 35, 0, 30)
-InputIDTextBox.Position = UDim2.new(0, 10, 0, 25)
-InputIDTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-InputIDTextBox.BackgroundTransparency = 1
-InputIDTextBox.TextTransparency = 0.5
-InputIDTextBox.TextSize = 14
-InputIDTextBox.TextScaled = true
-InputIDTextBox.Font = Enum.Font.GothamBold
-InputIDTextBox.BackgroundColor3 = Color3.fromRGB(45, 50, 62)
-InputIDTextBox.ClearTextOnFocus = true
-InputIDTextBox.Parent = InputIDFrame
+-- TextBox in InputNameBox
+local InputNameBox = Instance.new("TextBox")
+InputNameBox.PlaceholderText = "Paste Name Script"
+InputNameBox.Text = "Paste Name Script"
+InputNameBox.Size = UDim2.new(0.9, 35, 0, 30)
+InputNameBox.Position = UDim2.new(0, 10, 0, 25)
+InputNameBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+InputNameBox.BackgroundTransparency = 1
+InputNameBox.TextTransparency = 0.5
+InputNameBox.TextSize = 14
+InputNameBox.TextScaled = true
+InputNameBox.Font = Enum.Font.GothamBold
+InputNameBox.BackgroundColor3 = Color3.fromRGB(45, 50, 62)
+InputNameBox.ClearTextOnFocus = true
+InputNameBox.Parent = InputNameFrame
 
 -- Create InputScript frame
 local InputScriptFrame = Instance.new("Frame")
