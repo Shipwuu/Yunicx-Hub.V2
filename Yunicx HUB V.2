@@ -137,3 +137,58 @@ end
 
 -- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
+
+
+-- Step 8: Create Draggable functionality
+local isDragging = false
+local dragStart = nil
+local startPos = nil
+
+-- Helper function for PC drag
+local function onInputBegan(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        isDragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+    end
+end
+
+-- Helper function for Android drag
+local function onTouchBegan(touch)
+    isDragging = true
+    dragStart = touch.Position
+    startPos = MainFrame.Position
+end
+
+local function onInputChanged(input)
+    if isDragging then
+        local delta = input.Position - dragStart
+        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        
+        -- Limit drag to UltraFrame's X position
+        if MainFrame.Position.X.Offset < UltraFrame.Position.X.Offset then
+            MainFrame.Position = UDim2.new(0, UltraFrame.Position.X.Offset, MainFrame.Position.Y.Scale, MainFrame.Position.Y.Offset)
+        elseif MainFrame.Position.X.Offset > UltraFrame.Position.X.Offset + UltraFrame.Size.X.Offset - MainFrame.Size.X.Offset then
+            MainFrame.Position = UDim2.new(0, UltraFrame.Position.X.Offset + UltraFrame.Size.X.Offset - MainFrame.Size.X.Offset, MainFrame.Position.Y.Scale, MainFrame.Position.Y.Offset)
+        end
+    end
+end
+
+local function onInputEnded(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        isDragging = false
+    end
+end
+
+-- Attach to both PC and Android input types
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    onInputBegan(input)
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    onInputChanged(input)
+end)
+
+game:GetService("UserInputService").InputEnded:Connect(function(input)
+    onInputEnded(input)
+end)
