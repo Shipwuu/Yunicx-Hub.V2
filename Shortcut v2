@@ -441,3 +441,87 @@ end)
 
 
 
+-- Check if the folder exists, create it if it doesn't
+if not isfolder("Shipu_Script") then
+    makefolder("Shipu_Script")
+end
+
+-- Function to save the script content to a txt file
+local function saveScriptToFile(scriptName, scriptContent)
+    local filePath = "Shipu_Script/" .. scriptName .. ".txt"
+    writefile(filePath, scriptContent)
+end
+
+-- Create the AddScript button template
+local function createButton(scriptName)
+    local templatescript = Instance.new("TextButton")
+    templatescript.Name = "AddScript_" .. scriptName
+    templatescript.Size = UDim2.new(0, 200, 0, 50)  -- Adjust size as needed
+    templatescript.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    templatescript.BackgroundTransparency = 0.8
+    templatescript.Text = scriptName  -- Set the text to the script name
+    templatescript.Parent = SecondMainFrame  -- Assuming SecondMainFrame is defined elsewhere
+    
+    -- Apply UICorner to templatescript button
+    local UICorner = Instance.new("UICorner")
+    UICorner.CornerRadius = UDim.new(0.1, 0)
+    UICorner.Parent = templatescript
+    
+    -- Button click function to load the script content
+    templatescript.MouseButton1Click:Connect(function()
+        local filePath = "Shipu_Script/" .. scriptName .. ".txt"
+        local scriptContent = readfile(filePath)
+        -- You can then load or execute the content here
+        print(scriptContent)  -- For debugging purposes
+    end)
+end
+
+-- Create the AddScript button
+local AddScriptButton = Instance.new("TextButton")
+AddScriptButton.Size = UDim2.new(0, 200, 0, 50)
+AddScriptButton.Position = UDim2.new(0, 0, 0, 100)  -- Adjust position as needed
+AddScriptButton.BackgroundColor3 = Color3.fromRGB(183, 183, 183)
+AddScriptButton.Text = "Save Script"
+AddScriptButton.Parent = SecondMainFrame
+
+-- Button click functionality
+AddScriptButton.MouseButton1Click:Connect(function()
+    local scriptName = InputNameBox.Text
+    local scriptContent = InputScriptTextBox.Text
+    
+    if scriptName ~= "" and scriptContent ~= "" then
+        -- Save the script to file
+        saveScriptToFile(scriptName, scriptContent)
+        print("Script saved: " .. scriptName)
+        
+        -- Create a button dynamically for the saved script
+        createButton(scriptName)
+    else
+        print("Please fill in both fields.")
+    end
+end)
+
+-- Update the button color based on text input
+InputNameBox.Changed:Connect(function()
+    if InputNameBox.Text ~= "" and InputScriptTextBox.Text ~= "" then
+        AddScriptButton.BackgroundColor3 = Color3.fromRGB(59, 139, 254)
+    else
+        AddScriptButton.BackgroundColor3 = Color3.fromRGB(183, 183, 183)
+    end
+end)
+
+InputScriptTextBox.Changed:Connect(function()
+    if InputNameBox.Text ~= "" and InputScriptTextBox.Text ~= "" then
+        AddScriptButton.BackgroundColor3 = Color3.fromRGB(59, 139, 254)
+    else
+        AddScriptButton.BackgroundColor3 = Color3.fromRGB(183, 183, 183)
+    end
+end)
+
+-- Load existing scripts and create buttons for them
+for _, file in ipairs(listfiles("Shipu_Script")) do
+    if file:match(".txt$") then
+        local scriptName = file:match("Shipu_Script/(.+).txt")
+        createButton(scriptName)
+    end
+end
