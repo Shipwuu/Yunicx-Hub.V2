@@ -464,7 +464,7 @@ local function createButton(scriptName)
     
     -- Apply UICorner to templatescript button
     local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(0.1, 0)
+    UICorner.CornerRadius = UDim.new(10, 10)
     UICorner.Parent = templatescript
     
     -- Button click function to load and execute the script content
@@ -472,12 +472,23 @@ local function createButton(scriptName)
         local filePath = "Shipu_Script/" .. scriptName .. ".txt"
         local scriptContent = readfile(filePath)
         
-        -- Create a script instance and set its source to the content from the file
-        local scriptInstance = Instance.new("Script")
-        scriptInstance.Source = scriptContent
-        scriptInstance.Parent = game.Workspace  -- You can change the parent as needed to execute the script
+        -- Use loadstring to execute the content of the script directly
+        local success, errorMsg = pcall(function()
+            local func = loadstring(scriptContent)  -- Convert the content to a Lua function
+            if func then
+                func()  -- Execute the loaded function
+            else
+                error("Failed to load script: " .. scriptName)
+            end
+        end)
+        
+        -- If there's an error, print the error message
+        if not success then
+            warn("Error executing script " .. scriptName .. ": " .. errorMsg)
+        end
     end)
 end
+
 
 -- Button click functionality
 AddScriptButton.MouseButton1Click:Connect(function()
