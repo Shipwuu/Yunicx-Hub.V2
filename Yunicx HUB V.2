@@ -1,4 +1,4 @@
--- Step 1: Create the ScreenGui and main UI components
+-- Step 1: Create the ScreenGui
 local existingScreenGui = game:GetService("CoreGui"):FindFirstChild("ShipuHub")
 if existingScreenGui then
     existingScreenGui:Destroy() -- Destroy the previous ScreenGui if it exists
@@ -8,6 +8,7 @@ local ShipuHub = Instance.new("ScreenGui")
 ShipuHub.Name = "ShipuHub"
 ShipuHub.Parent = game:GetService("CoreGui")
 
+-- Step 2: Create the UltraFrame
 local UltraFrame = Instance.new("Frame")
 UltraFrame.Name = "UltraFrame"
 UltraFrame.Size = UDim2.new(1, 0, 0, 47)  -- Updated size
@@ -22,10 +23,11 @@ UltraLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
 UltraLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 UltraLayout.Parent = UltraFrame
 
+-- Step 3: Create MainFrame
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Updated size
-MainFrame.Position = UDim2.new(0.6, 0, 0, -46)  -- Updated position
+MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
+MainFrame.Position = UDim2.new(0.6, 0, 0, -46)  -- Initial position
 MainFrame.BackgroundTransparency = 1
 MainFrame.Parent = UltraFrame
 
@@ -36,17 +38,27 @@ MainLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 MainLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 MainLayout.Parent = MainFrame
 
+-- Step 4: Create SecondMainFrame (child of MainFrame)
 local SecondMainFrame = Instance.new("Frame")
 SecondMainFrame.Name = "ScriptFile"
 SecondMainFrame.Size = UDim2.new(0.5, 60, 0, 48)  -- Updated size
 SecondMainFrame.Position = UDim2.new(0, 0, 0, 0)  -- Updated position
 SecondMainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
 SecondMainFrame.BackgroundTransparency = 0.4
-SecondMainFrame.Parent = MainFrame  -- Now parent to MainFrame
+SecondMainFrame.Parent = MainFrame
 
--- Create the ToggleUI ImageButton
+-- Step 5: Create the SettingUIFrame (also inside MainFrame)
+local SettingUIFrame = Instance.new("Frame")
+SettingUIFrame.Name = "UISetting"
+SettingUIFrame.Size = UDim2.new(0, 58, 0, 48)
+SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
+SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
+SettingUIFrame.BackgroundTransparency = 0.4
+SettingUIFrame.Parent = MainFrame
+
+-- Step 6: Create the ToggleUI ImageButton
 local ToggleUI = Instance.new("ImageButton")
-ToggleUI.Name = "ToggleUI"
+ToggleUI.Name = "AToggleUI"
 ToggleUI.Size = UDim2.new(0, 37, 0, 37)
 ToggleUI.Position = UDim2.new(0, 0, 0, 0)
 ToggleUI.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -55,40 +67,67 @@ ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Defau
 ToggleUI.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
 ToggleUI.Parent = UltraFrame
 
--- Apply UICorner to AddScriptButton
+-- Apply UICorner to ToggleUI
 local UICornerButton = Instance.new("UICorner")
 UICornerButton.CornerRadius = UDim.new(10, 10)
 UICornerButton.Parent = ToggleUI
 
--- Step 2: Toggle functionality for MainFrame
+-- Step 7: Animation and Toggle Functionality
 local isOpen = false -- Track the toggle state
 local TweenService = game:GetService("TweenService")
 
 local function toggleUI()
     if isOpen then
-        -- Close MainFrame with animation
+        -- Close the MainFrame (shrink it)
         local closeTween = TweenService:Create(
             MainFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0.4, 0, 0, 47)}
+            {Size = UDim2.new(0, 0, 0, 47)} -- Shrink the width
         )
         closeTween:Play()
+
+        -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
+        local fadeTween = TweenService:Create(
+            SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 1}
+        )
+        fadeTween:Play()
+
+        -- Wait for the tween to finish and change the image
+        closeTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Reset to the default image
+        end)
     else
-        -- Open MainFrame with animation
+        -- Open the MainFrame (expand it)
         local openTween = TweenService:Create(
             MainFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0.4, 0, 0, 47)}
+            {Size = UDim2.new(0.4, 0, 0, 47)} -- Expand to original size
         )
         openTween:Play()
+
+        -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
+        local fadeTween = TweenService:Create(
+            SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 0.4}
+        )
+        fadeTween:Play()
+
+        -- Wait for the tween to finish and change the image
+        openTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Set to the pressed image
+        end)
     end
 
     -- Toggle the open state
     isOpen = not isOpen
 end
 
--- Connect the ToggleUI button to the toggle functionality
+-- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
+
 
 -- Step 3: Draggable functionality for MainFrame (horizontal drag only)
 local dragging = false
