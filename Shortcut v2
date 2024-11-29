@@ -49,28 +49,13 @@ SecondMainUIGradient.Color = ColorSequence.new({
 SecondMainUIGradient.Rotation = 0 -- Initial rotation
 SecondMainUIGradient.Parent = SecondMainFrame
 
--- Layout for Script Buttons (Horizontal Layout)
+-- Step 4: Layout for Script Buttons (Horizontal Layout)
 local SecondButtonLayout = Instance.new("UIListLayout")
 SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
 SecondButtonLayout.Padding = UDim.new(0, 5)
 SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 SecondButtonLayout.Parent = SecondMainFrame
-
--- Scrollable Content (to handle overflow when buttons exceed the space)
-local ScrollingFrame = Instance.new("ScrollingFrame")
-ScrollingFrame.Size = UDim2.new(1, 0, 1, 0)  -- Fill the entire frame
-ScrollingFrame.BackgroundTransparency = 1
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 2, 0)  -- Initial canvas size, adjust later
-ScrollingFrame.ScrollBarThickness = 10
-ScrollingFrame.Parent = SecondMainFrame
-
--- Make ScrollingFrame the parent for the buttons, so they can scroll
-ScrollingFrame.ChildAdded:Connect(function(child)
-    -- When a child is added (button), update the canvas size
-    wait(0.1)  -- To ensure that the button is fully added before calculating
-    ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, SecondButtonLayout.AbsoluteContentSize.Y + 10)
-end)
 
 -- Step 5: Draggable Functionality for MainFrame (Mobile Only)
 local dragToggle = nil
@@ -475,28 +460,35 @@ local function saveScriptToFile(scriptName, scriptContent)
     writefile(filePath, scriptContent)
 end
 
--- Function to create a button in the layout
+-- Function to create buttons and position them dynamically in rows
 local function createButtonWithPosition(scriptName, index)
     -- Create the button template with the specified size
     local templatescript = Instance.new("TextButton")
     templatescript.Name = "AddScript_" .. scriptName
-    templatescript.Size = UDim2.new(0, 37, 0, 37)  -- Button size
+    templatescript.Size = UDim2.new(0, 37, 0, 37)  -- Adjusted size
     templatescript.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     templatescript.BackgroundTransparency = 0.8
     templatescript.Text = scriptName  -- Set the text to the script name
-    templatescript.Parent = ScrollingFrame  -- Place the button inside the ScrollingFrame
+    templatescript.Parent = SecondMainFrame  -- Assuming SecondMainFrame is defined elsewhere
     
-    -- Apply corner radius to the button
+    -- Apply UICorner to templatescript button
     local UICorner = Instance.new("UICorner")
     UICorner.CornerRadius = UDim.new(0.1, 0)
     UICorner.Parent = templatescript
+
+    -- Calculate the position based on index
+    local row = math.floor((index - 1) / 8)  -- Determines the row number
+    local col = (index - 1) % 8  -- Determines the column position in the row
+
+    -- Position the button (adjust for spacing)
+    templatescript.Position = UDim2.new(0, col * 47, 0, row * 47)  -- Adjust for the button size (47 instead of 37)
 
     -- Button click function to load and execute the script content
     templatescript.MouseButton1Click:Connect(function()
         local filePath = "Shipu_Script/" .. scriptName .. ".txt"
         local scriptContent = readfile(filePath)
         
-        -- Execute the content of the script directly
+        -- Use loadstring to execute the content of the script directly
         local success, errorMsg = pcall(function()
             local func = loadstring(scriptContent)  -- Convert the content to a Lua function
             if func then
@@ -512,14 +504,6 @@ local function createButtonWithPosition(scriptName, index)
         end
     end)
 end
-
--- Create the AddScript button (same as before, saves scripts)
-local AddScriptButton = Instance.new("TextButton")
-AddScriptButton.Size = UDim2.new(0, 200, 0, 50)
-AddScriptButton.Position = UDim2.new(0, 0, 0, 100)  -- Adjust position as needed
-AddScriptButton.BackgroundColor3 = Color3.fromRGB(183, 183, 183)
-AddScriptButton.Text = "Save Script"
-AddScriptButton.Parent = SecondMainFrame
 
 -- Button click functionality
 AddScriptButton.MouseButton1Click:Connect(function()
