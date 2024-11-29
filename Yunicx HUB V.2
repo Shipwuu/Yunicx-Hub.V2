@@ -16,7 +16,6 @@ UltraFrame.Position = UDim2.new(0, 0, 0, -47)  -- Updated position
 UltraFrame.BackgroundTransparency = 1
 UltraFrame.Parent = ShipuHub
 
-
 -- Step 3: Create MainFrame
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
@@ -138,57 +137,63 @@ end
 -- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
 
+-- Step 8: Draggable Script for Android and PC Devices
+local UserInputService = game:GetService("UserInputService")
 
--- Step 8: Create Draggable functionality
-local isDragging = false
-local dragStart = nil
-local startPos = nil
+local dragEnabled = false
+local holdTime = 0
+local dragging = false
+local startPos = Vector2.new(0, 0)
+local currentPos = Vector2.new(0, 0)
 
--- Helper function for PC drag
-local function onInputBegan(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        isDragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position
-    end
+-- Function to start dragging
+local function onDragStart(input)
+    startPos = input.Position
+    dragging = false
+    holdTime = 0
+
+    -- Change color to yellow if held for 0.1s
+    MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
 end
 
--- Helper function for Android drag
-local function onTouchBegan(touch)
-    isDragging = true
-    dragStart = touch.Position
-    startPos = MainFrame.Position
-end
-
-local function onInputChanged(input)
-    if isDragging then
-        local delta = input.Position - dragStart
-        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-        
-        -- Limit drag to UltraFrame's X position
-        if MainFrame.Position.X.Offset < UltraFrame.Position.X.Offset then
-            MainFrame.Position = UDim2.new(0, UltraFrame.Position.X.Offset, MainFrame.Position.Y.Scale, MainFrame.Position.Y.Offset)
-        elseif MainFrame.Position.X.Offset > UltraFrame.Position.X.Offset + UltraFrame.Size.X.Offset - MainFrame.Size.X.Offset then
-            MainFrame.Position = UDim2.new(0, UltraFrame.Position.X.Offset + UltraFrame.Size.X.Offset - MainFrame.Size.X.Offset, MainFrame.Position.Y.Scale, MainFrame.Position.Y.Offset)
+-- Function to drag the frame
+local function onDrag(input)
+    if dragging then
+        local delta = input.Position - startPos
+        MainFrame.Position = UDim2.new(0, delta.X, 0, delta.Y)
+    else
+        -- Track the hold time
+        holdTime = holdTime + input.DeltaTime
+        if holdTime >= 0.5 then
+            dragging = true
+            MainFrame.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Green if held for 0.5s
+        elseif holdTime >= 0.1 then
+            MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0) -- Yellow if held for 0.1s
         end
     end
 end
 
-local function onInputEnded(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        isDragging = false
-    end
+-- Function to stop dragging
+local function onDragEnd(input)
+    dragging = false
+    MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Reset color
 end
 
--- Attach to both PC and Android input types
-game:GetService("UserInputService").InputBegan:Connect(function(input)
-    onInputBegan(input)
+-- Listen for touch or mouse input based on device
+UserInputService.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+        onDragStart(input)
+    end
 end)
 
-game:GetService("UserInputService").InputChanged:Connect(function(input)
-    onInputChanged(input)
+UserInputService.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement then
+        onDrag(input)
+    end
 end)
 
-game:GetService("UserInputService").InputEnded:Connect(function(input)
-    onInputEnded(input)
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+        onDragEnd(input)
+    end
 end)
