@@ -8,6 +8,7 @@ local ShipuHub = Instance.new("ScreenGui")
 ShipuHub.Name = "ShipuHub"
 ShipuHub.Parent = game:GetService("CoreGui")
 
+-- Step 2: Create the UltraFrame
 local UltraFrame = Instance.new("Frame")
 UltraFrame.Name = "UltraFrame"
 UltraFrame.Size = UDim2.new(1, 0, 0, 47)  -- Updated size
@@ -15,99 +16,108 @@ UltraFrame.Position = UDim2.new(0, 0, 0, -47)  -- Updated position
 UltraFrame.BackgroundTransparency = 1
 UltraFrame.Parent = ShipuHub
 
--- Step 2: Create the MainFrame
+local UltraLayout = Instance.new("UIListLayout")
+UltraLayout.FillDirection = Enum.FillDirection.Horizontal
+UltraLayout.Padding = UDim.new(0, 9)
+UltraLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+UltraLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+UltraLayout.Parent = UltraFrame
+
+-- Step 3: Create MainFrame
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Updated size
-MainFrame.Position = UDim2.new(0.6, 0, 0, -46)  -- Updated position
+MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
+MainFrame.Position = UDim2.new(0.6, 0, 0, -46)  -- Initial position
 MainFrame.BackgroundTransparency = 1
 MainFrame.Parent = UltraFrame
 
-local ButtonLayout = Instance.new("UIListLayout")
-ButtonLayout.FillDirection = Enum.FillDirection.Horizontal
-ButtonLayout.Padding = UDim.new(0, 9)
-ButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-ButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-ButtonLayout.Parent = MainFrame
+local MainLayout = Instance.new("UIListLayout")
+MainLayout.FillDirection = Enum.FillDirection.Horizontal
+MainLayout.Padding = UDim.new(0, 9)
+MainLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+MainLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+MainLayout.Parent = MainFrame
 
--- Step 3: Create SecondMainFrame and Parent it to MainFrame
+-- Step 4: Create SecondMainFrame (child of MainFrame)
 local SecondMainFrame = Instance.new("Frame")
-SecondMainFrame.Name = "Script File"
+SecondMainFrame.Name = "ScriptFile"
 SecondMainFrame.Size = UDim2.new(0.5, 60, 0, 48)  -- Updated size
 SecondMainFrame.Position = UDim2.new(0, 0, 0, 0)  -- Updated position
 SecondMainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
 SecondMainFrame.BackgroundTransparency = 0.4
-SecondMainFrame.Parent = MainFrame  -- Now parent to MainFrame
+SecondMainFrame.Parent = MainFrame
 
--- Create SettingUIFrame
+-- Step 5: Create the SettingUIFrame (also inside MainFrame)
 local SettingUIFrame = Instance.new("Frame")
 SettingUIFrame.Name = "UISetting"
 SettingUIFrame.Size = UDim2.new(0, 58, 0, 48)
 SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
 SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
 SettingUIFrame.BackgroundTransparency = 0.4
-SettingUIFrame.Parent = MainFrame  -- Parent to MainFrame
+SettingUIFrame.Parent = MainFrame
 
--- Tweening for expanding SettingUIFrame and changing image with fade-in and fade-out
+-- Step 6: Create the ToggleUI ImageButton
+local ToggleUI = Instance.new("ImageButton")
+ToggleUI.Name = "ToggleUI"
+ToggleUI.Size = UDim2.new(0, 37, 0, 37)
+ToggleUI.Position = UDim2.new(0, 0, 0, 0)
+ToggleUI.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleUI.BackgroundTransparency = 0.8
+ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
+ToggleUI.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
+ToggleUI.Parent = UltraFrame
+
+-- Apply UICorner to ToggleUI
+local UICornerButton = Instance.new("UICorner")
+UICornerButton.CornerRadius = UDim.new(10, 10)
+UICornerButton.Parent = ToggleUI
+
+-- Step 7: Animation and Toggle Functionality
 local isOpen = false -- Track the toggle state
 local TweenService = game:GetService("TweenService")
 
 local function toggleUI()
     if isOpen then
-        -- Close the SettingUIFrame
+        -- Close the MainFrame (shrink it)
         local closeTween = TweenService:Create(
-            SettingUIFrame,
+            MainFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0, 58, 0, 48)}
+            {Size = UDim2.new(0, 0, 0, 47)} -- Shrink the width
         )
         closeTween:Play()
 
-        -- Fade out and change the image back to the right arrow
-        local closeImageTween = TweenService:Create(
-            ToggleUISetting,
-            TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {ImageTransparency = 1}
+        -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
+        local fadeTween = TweenService:Create(
+            SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 1}
         )
-        closeImageTween:Play()
-        
-        -- Wait for the fade-out to finish, then change the image
-        closeImageTween.Completed:Connect(function()
-            ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- Arrow pointing to the right
-            -- Fade in the new image
-            local fadeInTween = TweenService:Create(
-                ToggleUISetting,
-                TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-                {ImageTransparency = 0}
-            )
-            fadeInTween:Play()
+        fadeTween:Play()
+
+        -- Wait for the tween to finish and change the image
+        closeTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Reset to the default image
         end)
     else
-        -- Open the SettingUIFrame
+        -- Open the MainFrame (expand it)
         local openTween = TweenService:Create(
-            SettingUIFrame,
+            MainFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0.2, 25, 0, 48)}
+            {Size = UDim2.new(0.4, 0, 0, 47)} -- Expand to original size
         )
         openTween:Play()
 
-        -- Fade out and change the image to the left arrow
-        local openImageTween = TweenService:Create(
-            ToggleUISetting,
-            TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {ImageTransparency = 1}
+        -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
+        local fadeTween = TweenService:Create(
+            SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 0.4}
         )
-        openImageTween:Play()
+        fadeTween:Play()
 
-        -- Wait for the fade-out to finish, then change the image
-        openImageTween.Completed:Connect(function()
-            ToggleUISetting.Image = "rbxthumb://type=Asset&id=117802441000023&w=420&h=420" -- Arrow pointing to the left
-            -- Fade in the new image
-            local fadeInTween = TweenService:Create(
-                ToggleUISetting,
-                TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-                {ImageTransparency = 0}
-            )
-            fadeInTween:Play()
+        -- Wait for the tween to finish and change the image
+        openTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Set to the pressed image
         end)
     end
 
@@ -115,5 +125,5 @@ local function toggleUI()
     isOpen = not isOpen
 end
 
--- Connect the ToggleUISetting button to toggle functionality
-ToggleUISetting.MouseButton1Click:Connect(toggleUI)
+-- Connect the ToggleUI ImageButton to toggle functionality
+ToggleUI.MouseButton1Click:Connect(toggleUI)
