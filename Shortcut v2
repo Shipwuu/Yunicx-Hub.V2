@@ -472,7 +472,7 @@ local function createButton(scriptName)
     
     -- Apply UICorner to templatescript button
     local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(0.1, 0)
+    UICorner.CornerRadius = UDim.new(10, 10)
     UICorner.Parent = templatescript
     
     -- Button click function to load and execute the script content
@@ -496,14 +496,6 @@ local function createButton(scriptName)
         end
     end)
 end
-
--- Create the AddScript button
-local AddScriptButton = Instance.new("TextButton")
-AddScriptButton.Size = UDim2.new(0, 200, 0, 50)
-AddScriptButton.Position = UDim2.new(0, 0, 0, 100)  -- Adjust position as needed
-AddScriptButton.BackgroundColor3 = Color3.fromRGB(183, 183, 183)
-AddScriptButton.Text = "Save Script"
-AddScriptButton.Parent = SecondMainFrame
 
 -- Button click functionality
 AddScriptButton.MouseButton1Click:Connect(function()
