@@ -1,1 +1,25 @@
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ShipuHub"
+ScreenGui.Parent = game:GetService("CoreGui")
 
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Updated size
+MainFrame.Position = UDim2.new(0.6, 0, 0, -46)  -- Updated position
+MainFrame.BackgroundTransparency = 1
+MainFrame.Parent = ScreenGui
+
+local SecondMainFrame = Instance.new("Frame")
+SecondMainFrame.Name = "Script File"
+SecondMainFrame.Size = UDim2.new(0.5, 60, 0, 48)  -- Updated size
+SecondMainFrame.Position = UDim2.new(0, 0, 0, 0)  -- Updated position
+SecondMainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
+SecondMainFrame.BackgroundTransparency = 0.4
+SecondMainFrame.Parent = MainFrame  -- Now parent to MainFrame
+
+local SettingUIFrame = Instance.new("Frame")
+SettingUIFrame.Name = "UISetting"
+SettingUIFrame.Size = UDim2.new(0, 58, 0, 48)
+SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
+SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
+SettingUIFrame.BackgroundTransparency = 0.4
+SettingUIFrame.Parent = MainFrame  -- Parent to MainFrame
