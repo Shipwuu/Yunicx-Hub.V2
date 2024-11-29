@@ -464,7 +464,7 @@ end
 local function createButton(scriptName)
     local templatescript = Instance.new("TextButton")
     templatescript.Name = "AddScript_" .. scriptName
-    templatescript.Size = UDim2.new(0, 200, 0, 50)  -- Adjust size as needed
+    templatescript.Size = UDim2.new(0, 37, 0, 37)  -- Adjust size as neede
     templatescript.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     templatescript.BackgroundTransparency = 0.8
     templatescript.Text = scriptName  -- Set the text to the script name
