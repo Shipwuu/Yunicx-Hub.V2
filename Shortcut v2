@@ -183,6 +183,14 @@ rotationTween:Play()
 
 -- Create HiddenFrame (for adjusting button position)
 local HiddenFrame = Instance.new("Frame")
+HiddenFrame.Name = "AFrame"
+HiddenFrame.Size = UDim2.new(0, 5, 0, 30)
+HiddenFrame.Position = UDim2.new(0, 0, 0, 0)
+HiddenFrame.BackgroundTransparency = 1
+HiddenFrame.Parent = SecondMainFrame
+
+-- Create HiddenFrame (for adjusting button position)
+local HiddenFrame = Instance.new("Frame")
 HiddenFrame.Name = "ZFrame"
 HiddenFrame.Size = UDim2.new(0, 5, 0, 30)
 HiddenFrame.Position = UDim2.new(0, 0, 0, 0)
@@ -452,11 +460,12 @@ local function saveScriptToFile(scriptName, scriptContent)
     writefile(filePath, scriptContent)
 end
 
--- Create the AddScript button template
-local function createButton(scriptName)
+-- Function to create buttons and position them dynamically in rows
+local function createButtonWithPosition(scriptName, index)
+    -- Create the button template with the specified size
     local templatescript = Instance.new("TextButton")
     templatescript.Name = "AddScript_" .. scriptName
-    templatescript.Size = UDim2.new(0, 37, 0, 37)  -- Adjust size as needed
+    templatescript.Size = UDim2.new(0, 37, 0, 37)  -- Adjusted size
     templatescript.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     templatescript.BackgroundTransparency = 0.8
     templatescript.Text = scriptName  -- Set the text to the script name
@@ -464,9 +473,16 @@ local function createButton(scriptName)
     
     -- Apply UICorner to templatescript button
     local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(10, 10)
+    UICorner.CornerRadius = UDim.new(0.1, 0)
     UICorner.Parent = templatescript
-    
+
+    -- Calculate the position based on index
+    local row = math.floor((index - 1) / 8)  -- Determines the row number
+    local col = (index - 1) % 8  -- Determines the column position in the row
+
+    -- Position the button (adjust for spacing)
+    templatescript.Position = UDim2.new(0, col * 47, 0, row * 47)  -- Adjust for the button size (47 instead of 37)
+
     -- Button click function to load and execute the script content
     templatescript.MouseButton1Click:Connect(function()
         local filePath = "Shipu_Script/" .. scriptName .. ".txt"
@@ -489,7 +505,6 @@ local function createButton(scriptName)
     end)
 end
 
-
 -- Button click functionality
 AddScriptButton.MouseButton1Click:Connect(function()
     local scriptName = InputNameBox.Text
@@ -501,7 +516,7 @@ AddScriptButton.MouseButton1Click:Connect(function()
         print("Script saved: " .. scriptName)
         
         -- Create a button dynamically for the saved script
-        createButton(scriptName)
+        createButtonWithPosition(scriptName, #listfiles("Shipu_Script"))
     else
         print("Please fill in both fields.")
     end
@@ -525,9 +540,10 @@ InputScriptTextBox.Changed:Connect(function()
 end)
 
 -- Load existing scripts and create buttons for them
-for _, file in ipairs(listfiles("Shipu_Script")) do
+for index, file in ipairs(listfiles("Shipu_Script")) do
     if file:match(".txt$") then
         local scriptName = file:match("Shipu_Script/(.+).txt")
-        createButton(scriptName)
+        createButtonWithPosition(scriptName, index)
     end
 end
+
