@@ -4,16 +4,24 @@ if existingScreenGui then
     existingScreenGui:Destroy() -- Destroy the previous ScreenGui if it exists
 end
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "ShipuHub"
-ScreenGui.Parent = game:GetService("CoreGui")
+local ShipuHub = Instance.new("ScreenGui")
+ShipuHub.Name = "ShipuHub"
+ShipuHub.Parent = game:GetService("CoreGui")
+
+local UltraFrame = Instance.new("Frame")
+UltraFrame.Name = "UltraFrame"
+UltraFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Updated size
+UltraFrame.Position = UDim2.new(0.6, 0, 0, -46)  -- Updated position
+UltraFrame.BackgroundTransparency = 1
+UltraFrame.Parent = ShipuHub
 
 -- Step 2: Create the MainFrame
 local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
 MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Updated size
 MainFrame.Position = UDim2.new(0.6, 0, 0, -46)  -- Updated position
 MainFrame.BackgroundTransparency = 1
-MainFrame.Parent = ScreenGui
+MainFrame.Parent = UltraFrame
 
 -- Create the ToggleUI ImageButton
 local ToggleUI = Instance.new("ImageButton")
@@ -24,16 +32,7 @@ ToggleUI.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ToggleUI.BackgroundTransparency = 0.8
 ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
 ToggleUI.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
-ToggleUI.Parent = ScreenGui
-
--- Apply UICorner to AddScriptButton
-local UICornerButton = Instance.new("UICorner")
-UICornerButton.CornerRadius = UDim.new(10, 10)
-UICornerButton.Parent = ToggleUI
-
-local SecondMainUICorner = Instance.new("UICorner")
-SecondMainUICorner.CornerRadius = UDim.new(10, 10)
-SecondMainUICorner.Parent = MainFrame
+ToggleUI.Parent = UltraFrame
 
 local ButtonLayout = Instance.new("UIListLayout")
 ButtonLayout.FillDirection = Enum.FillDirection.Horizontal
@@ -51,111 +50,6 @@ SecondMainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
 SecondMainFrame.BackgroundTransparency = 0.4
 SecondMainFrame.Parent = MainFrame  -- Now parent to MainFrame
 
-local SecondMainUICorner = Instance.new("UICorner")
-SecondMainUICorner.CornerRadius = UDim.new(10, 10)
-SecondMainUICorner.Parent = SecondMainFrame
-
-local SecondMainUIGradient = Instance.new("UIGradient")
-SecondMainUIGradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50))  -- A softer gradient
-})
-SecondMainUIGradient.Rotation = 0 -- Initial rotation
-SecondMainUIGradient.Parent = SecondMainFrame
-
--- Step 4: Layout for Script Buttons (Horizontal Layout)
-local SecondButtonLayout = Instance.new("UIListLayout")
-SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
-SecondButtonLayout.Padding = UDim.new(0, 5)
-SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-SecondButtonLayout.Parent = SecondMainFrame
-
--- Step 5: Draggable Functionality for MainFrame (Mobile Only)
-local dragToggle = nil
-local dragSpeed = 0.1
-local dragStart = nil
-local startPos = nil
-local isDragging = false
-local dragDelayTime = 1 -- Time in seconds to press and hold before dragging starts
-local holdTime = 0.5  -- Time in seconds to change the color to yellow
-local touchStartTime = nil
-
-local function updateFrameAppearance()
-    if touchStartTime then
-        local elapsedTime = tick() - touchStartTime
-        
-        if elapsedTime >= 1 then
-            -- 1 second hold: Change background to green, allow dragging
-            MainFrame.BackgroundColor3 = Color3.fromRGB(0, 255, 0)  -- Green
-            MainFrame.BackgroundTransparency = 0.9
-        elseif elapsedTime >= holdTime then
-            -- 0.5 second hold: Change background to yellow
-            MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0)  -- Yellow
-            MainFrame.BackgroundTransparency = 0.9
-        else
-            -- Reset to original appearance if less than 0.5 second
-            MainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)  -- Original color
-            MainFrame.BackgroundTransparency = 1
-        end
-    end
-end
-
-local function isMobileDevice()
-    return game:GetService("UserInputService").TouchEnabled
-end
-
-if isMobileDevice() then
-    MainFrame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.Touch then
-            -- Start the touch timer when the user first touches the frame
-            touchStartTime = tick()
-        end
-    end)
-
-    MainFrame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.Touch then
-            -- Update the frame's appearance based on the hold time
-            updateFrameAppearance()
-
-            -- If touch has been held long enough (1 second), unlock dragging
-            if touchStartTime and tick() - touchStartTime >= dragDelayTime then
-                if not isDragging then
-                    dragToggle = true
-                    dragStart = input.Position
-                    startPos = MainFrame.Position
-                    isDragging = true
-                end
-                -- Move only along the X-axis
-                local delta = input.Position - dragStart
-                MainFrame.Position = UDim2.new(startPos.X.Scale, delta.X, startPos.Y.Scale, startPos.Y.Offset)
-            end
-        end
-    end)
-
-    MainFrame.InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.Touch then
-            -- End the dragging and reset if touch ends
-            dragToggle = false
-            isDragging = false
-
-            -- Reset frame transparency and color after the touch ends
-            MainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)  -- Original color
-            MainFrame.BackgroundTransparency = 1
-        end
-    end)
-end
-
--- Step 6: Continuous rotation animation for UIGradient
-local TweenService = game:GetService("TweenService")
-local rotationTween = TweenService:Create(
-    SecondMainUIGradient,
-    TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true),
-    {Rotation = 360}
-)
-
-rotationTween:Play()
-
 -- Create SettingUIFrame
 local SettingUIFrame = Instance.new("Frame")
 SettingUIFrame.Name = "UISetting"
@@ -164,66 +58,6 @@ SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
 SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
 SettingUIFrame.BackgroundTransparency = 0.4
 SettingUIFrame.Parent = MainFrame  -- Parent to MainFrame
-
-local SecondMainUICorner = Instance.new("UICorner")
-SecondMainUICorner.CornerRadius = UDim.new(10, 10)
-SecondMainUICorner.Parent = SettingUIFrame
-
-local SettingUIFrameUIGradient = Instance.new("UIGradient")
-SettingUIFrameUIGradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50)) -- A softer gradient
-})
-SettingUIFrameUIGradient.Rotation = 0
-SettingUIFrameUIGradient.Parent = SettingUIFrame
-
--- Layout for Script Buttons
-local SecondButtonLayout = Instance.new("UIListLayout")
-SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
-SecondButtonLayout.Padding = UDim.new(0, 5)
-SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
-SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-SecondButtonLayout.Parent = SettingUIFrame
-
--- Continuous rotation animation for UIGradient
-local TweenService = game:GetService("TweenService")
-local rotationTween = TweenService:Create(
-    SettingUIFrameUIGradient,
-    TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true),
-    {Rotation = 360}
-)
-
-rotationTween:Play()
-
--- Create HiddenFrame (for adjusting button position)
-local HiddenFrame = Instance.new("Frame")
-HiddenFrame.Name = "AFrame"
-HiddenFrame.Size = UDim2.new(0, 5, 0, 30)
-HiddenFrame.Position = UDim2.new(0, 0, 0, 0)
-HiddenFrame.BackgroundTransparency = 1
-HiddenFrame.Parent = SecondMainFrame
-
--- Create HiddenFrame (for adjusting button position)
-local HiddenFrame = Instance.new("Frame")
-HiddenFrame.Name = "ZFrame"
-HiddenFrame.Size = UDim2.new(0, 5, 0, 30)
-HiddenFrame.Position = UDim2.new(0, 0, 0, 0)
-HiddenFrame.BackgroundTransparency = 1
-HiddenFrame.Parent = SettingUIFrame
-
--- Create the ToggleUISetting ImageButton
-local ToggleUISetting = Instance.new("ImageButton")
-ToggleUISetting.Name = "ToggleUISetting"
-ToggleUISetting.Size = UDim2.new(0, 37, 0, 37)
-ToggleUISetting.Position = UDim2.new(0, 0, 0, HiddenFrame.Size.Y.Offset)  -- Position based on HiddenFrame height
-ToggleUISetting.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ToggleUISetting.BackgroundTransparency = 0.8
-ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- The arrow pointing to the right
-ToggleUISetting.Parent = SettingUIFrame
-
-local ToggleUISettingUICorner = Instance.new("UICorner")
-ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
-ToggleUISettingUICorner.Parent = ToggleUISetting
 
 -- Tweening for expanding SettingUIFrame and changing image with fade-in and fade-out
 local isOpen = false -- Track the toggle state
@@ -294,19 +128,3 @@ end
 
 -- Connect the ToggleUISetting button to toggle functionality
 ToggleUISetting.MouseButton1Click:Connect(toggleUI)
-
--- Create the AddScript ImageButton
-local ImageButton2 = Instance.new("ImageButton")
-ImageButton2.Name = "AddScript"
-ImageButton2.Size = UDim2.new(0, 37, 0, 37)
-ImageButton2.Position = UDim2.new(0, 0, 0, ToggleUISetting.Position.Y.Offset + ToggleUISetting.Size.Y.Offset)  -- Positioned after ToggleUISetting
-ImageButton2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ImageButton2.BackgroundTransparency = 0.8
-ImageButton2.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
-ImageButton2.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
-ImageButton2.Parent = SettingUIFrame
-
--- Apply UICorner to AddScript button
-local UICorner2 = Instance.new("UICorner")
-UICorner2.CornerRadius = UDim.new(10, 10)
-UICorner2.Parent = ImageButton2
