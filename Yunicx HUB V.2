@@ -141,7 +141,7 @@ ToggleUI.MouseButton1Click:Connect(toggleUI)
 local UserInputService = game:GetService("UserInputService")
 
 local dragEnabled = false
-local holdTime = 0
+local holdStartTime = nil  -- Track the start time of the touch or mouse click
 local dragging = false
 local startPos = Vector2.new(0, 0)
 local currentPos = Vector2.new(0, 0)
@@ -150,7 +150,7 @@ local currentPos = Vector2.new(0, 0)
 local function onDragStart(input)
     startPos = input.Position
     dragging = false
-    holdTime = 0
+    holdStartTime = tick()  -- Start timing when the touch begins
 
     -- Change color to yellow if held for 0.1s
     MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
@@ -163,11 +163,11 @@ local function onDrag(input)
         MainFrame.Position = UDim2.new(0, delta.X, 0, delta.Y)
     else
         -- Track the hold time
-        holdTime = holdTime + input.DeltaTime
-        if holdTime >= 0.5 then
+        local holdDuration = tick() - holdStartTime
+        if holdDuration >= 0.5 then
             dragging = true
             MainFrame.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Green if held for 0.5s
-        elseif holdTime >= 0.1 then
+        elseif holdDuration >= 0.1 then
             MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0) -- Yellow if held for 0.1s
         end
     end
