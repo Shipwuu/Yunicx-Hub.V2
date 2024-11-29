@@ -16,18 +16,12 @@ UltraFrame.Position = UDim2.new(0, 0, 0, -47)  -- Updated position
 UltraFrame.BackgroundTransparency = 1
 UltraFrame.Parent = ShipuHub
 
-local UltraLayout = Instance.new("UIListLayout")
-UltraLayout.FillDirection = Enum.FillDirection.Horizontal
-UltraLayout.Padding = UDim.new(0, 9)
-UltraLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
-UltraLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-UltraLayout.Parent = UltraFrame
 
 -- Step 3: Create MainFrame
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
-MainFrame.Position = UDim2.new(0.6, 0, 0, -46)  -- Initial position
+MainFrame.Position = UDim2.new(0.6, 0, 0, 0)  -- Initial position
 MainFrame.BackgroundTransparency = 1
 MainFrame.Parent = UltraFrame
 
@@ -59,8 +53,8 @@ SettingUIFrame.Parent = MainFrame
 -- Step 6: Create the ToggleUI ImageButton
 local ToggleUI = Instance.new("ImageButton")
 ToggleUI.Name = "AToggleUI"
-ToggleUI.Size = UDim2.new(0, 37, 0, 37)
-ToggleUI.Position = UDim2.new(0, 0, 0, 0)
+ToggleUI.Size = UDim2.new(0, 40, 0, 40)
+ToggleUI.Position = UDim2.new(0.57, 0, 0, 4)
 ToggleUI.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ToggleUI.BackgroundTransparency = 0.8
 ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
@@ -73,7 +67,7 @@ UICornerButton.CornerRadius = UDim.new(10, 10)
 UICornerButton.Parent = ToggleUI
 
 -- Step 7: Animation and Toggle Functionality
-local isOpen = false -- Track the toggle state
+local isOpen = true -- Track the toggle state
 local TweenService = game:GetService("TweenService")
 
 local function toggleUI()
@@ -81,7 +75,7 @@ local function toggleUI()
         -- Close the MainFrame (shrink it)
         local closeTween = TweenService:Create(
             MainFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
             {Size = UDim2.new(0, 0, 0, 47)} -- Shrink the width
         )
         closeTween:Play()
@@ -89,6 +83,14 @@ local function toggleUI()
         -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
         local fadeTween = TweenService:Create(
             SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 1}
+        )
+        fadeTween:Play()
+
+        -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
+        local fadeTween = TweenService:Create(
+            SettingUIFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
             {BackgroundTransparency = 1}
         )
@@ -102,7 +104,7 @@ local function toggleUI()
         -- Open the MainFrame (expand it)
         local openTween = TweenService:Create(
             MainFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
             {Size = UDim2.new(0.4, 0, 0, 47)} -- Expand to original size
         )
         openTween:Play()
@@ -110,6 +112,14 @@ local function toggleUI()
         -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
         local fadeTween = TweenService:Create(
             SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 0.4}
+        )
+        fadeTween:Play()
+
+        -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
+        local fadeTween = TweenService:Create(
+            SettingUIFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
             {BackgroundTransparency = 0.4}
         )
@@ -127,56 +137,3 @@ end
 
 -- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
-
-
--- Step 3: Draggable functionality for MainFrame (horizontal drag only)
-local dragging = false
-local dragStart = nil
-local startPos = nil
-
-local function onDragStart(input)
-    dragging = true
-    dragStart = input.Position
-    startPos = MainFrame.Position
-end
-
-local function onDragMove(input)
-    if dragging then
-        local delta = input.Position - dragStart
-        -- Restrict dragging to the X-axis within the UltraFrame's bounds
-        local newPos = UDim2.new(0.6, math.clamp(startPos.X.Offset + delta.X, 0, UltraFrame.Size.X.Offset - MainFrame.Size.X.Offset), 0, -46)
-        MainFrame.Position = newPos
-    end
-end
-
-local function onDragEnd(input)
-    if dragging then
-        dragging = false
-        -- Add Exponential animation when releasing the frame
-        local releaseTween = TweenService:Create(
-            MainFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Position = UDim2.new(0.6, MainFrame.Position.X.Offset, 0, -46)} -- Set the final position
-        )
-        releaseTween:Play()
-    end
-end
-
--- Listen for drag input
-MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        onDragStart(input)
-    end
-end)
-
-MainFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        onDragMove(input)
-    end
-end)
-
-MainFrame.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        onDragEnd(input)
-    end
-end)
