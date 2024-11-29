@@ -456,7 +456,7 @@ end
 local function createButton(scriptName)
     local templatescript = Instance.new("TextButton")
     templatescript.Name = "AddScript_" .. scriptName
-    templatescript.Size = UDim2.new(0, 200, 0, 50)  -- Adjust size as needed
+    templatescript.Size = UDim2.new(0, 37, 0, 37)  -- Adjust size as needed
     templatescript.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     templatescript.BackgroundTransparency = 0.8
     templatescript.Text = scriptName  -- Set the text to the script name
@@ -464,15 +464,18 @@ local function createButton(scriptName)
     
     -- Apply UICorner to templatescript button
     local UICorner = Instance.new("UICorner")
-    UICorner.CornerRadius = UDim.new(10, 10)
+    UICorner.CornerRadius = UDim.new(0.1, 0)
     UICorner.Parent = templatescript
     
-    -- Button click function to load the script content
+    -- Button click function to load and execute the script content
     templatescript.MouseButton1Click:Connect(function()
         local filePath = "Shipu_Script/" .. scriptName .. ".txt"
         local scriptContent = readfile(filePath)
-        -- You can then load or execute the content here
-        print(scriptContent)  -- For debugging purposes
+        
+        -- Create a script instance and set its source to the content from the file
+        local scriptInstance = Instance.new("Script")
+        scriptInstance.Source = scriptContent
+        scriptInstance.Parent = game.Workspace  -- You can change the parent as needed to execute the script
     end)
 end
 
