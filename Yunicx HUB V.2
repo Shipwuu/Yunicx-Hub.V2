@@ -144,6 +144,7 @@ local dragEnabled = false
 local holdStartTime = nil  -- Track the start time of the touch or mouse click
 local dragging = false
 local startPos = Vector2.new(0, 0)
+local lastPos = UDim2.new(0.6, 0, 0, 0)  -- Store the last position of the frame
 local currentPos = Vector2.new(0, 0)
 
 -- Function to start dragging
@@ -176,10 +177,13 @@ end
 -- Function to stop dragging
 local function onDragEnd(input)
     dragging = false
-    MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- Reset color
+    MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)  -- Reset to white when released
+
+    -- Save the current position when dragging stops
+    lastPos = MainFrame.Position
 end
 
--- Listen for touch or mouse input based on device
+-- Connect the input began, changed, and ended events
 UserInputService.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
         onDragStart(input)
