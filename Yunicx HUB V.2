@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.4.4")
+print("Log v2.4.5")
 -- Try to Make Animasion
 
 
@@ -255,20 +255,20 @@ local function toggleUI()
         )
         closeTween:Play()
 
-        -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
-        local fadeTween2 = TweenService:Create(
-            SecondMainFrame,
+        -- Fade out Image in SecondMainFrame and SettingUIFrame (make transparent)
+        local fadeImageTween2 = TweenService:Create(
+            SecondMainFrame:FindFirstChildOfClass("ImageLabel") or SecondMainFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"),
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {BackgroundTransparency = 1}
+            {ImageTransparency = 1} -- Animate only the Image
         )
-        fadeTween2:Play()
+        fadeImageTween2:Play()
 
-        local fadeTween3 = TweenService:Create(
-            SettingUIFrame,
+        local fadeImageTween3 = TweenService:Create(
+            SettingUIFrame:FindFirstChildOfClass("ImageLabel") or SettingUIFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"),
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {BackgroundTransparency = 1}
+            {ImageTransparency = 1} -- Animate only the Image
         )
-        fadeTween3:Play()
+        fadeImageTween3:Play()
 
         -- Fade out children of SecondMainFrame and SettingUIFrame
         for _, child in pairs(SecondMainFrame:GetChildren()) do
@@ -294,7 +294,7 @@ local function toggleUI()
         end
 
         -- After fadeout completes, make the UI and children invisible
-        fadeTween3.Completed:Connect(function()
+        fadeImageTween3.Completed:Connect(function()
             SecondMainFrame.Visible = false
             SettingUIFrame.Visible = false
             -- Also set children visibility to false after animation
@@ -323,20 +323,20 @@ local function toggleUI()
         SecondMainFrame.Visible = true
         SettingUIFrame.Visible = true
 
-        -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
-        local fadeTween2 = TweenService:Create(
-            SecondMainFrame,
+        -- Fade in Image in SecondMainFrame and SettingUIFrame (make opaque)
+        local fadeImageTween2 = TweenService:Create(
+            SecondMainFrame:FindFirstChildOfClass("ImageLabel") or SecondMainFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"),
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {BackgroundTransparency = 0.4}
+            {ImageTransparency = 0} -- Animate only the Image
         )
-        fadeTween2:Play()
+        fadeImageTween2:Play()
 
-        local fadeTween3 = TweenService:Create(
-            SettingUIFrame,
+        local fadeImageTween3 = TweenService:Create(
+            SettingUIFrame:FindFirstChildOfClass("ImageLabel") or SettingUIFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"),
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {BackgroundTransparency = 0.4}
+            {ImageTransparency = 0} -- Animate only the Image
         )
-        fadeTween3:Play()
+        fadeImageTween3:Play()
 
         -- Fade in children of SecondMainFrame and SettingUIFrame
         for _, child in pairs(SecondMainFrame:GetChildren()) do
@@ -362,7 +362,7 @@ local function toggleUI()
         end
 
         -- Wait for the fade-in animation to finish and change the image
-        fadeTween3.Completed:Connect(function()
+        fadeImageTween3.Completed:Connect(function()
             -- Additional actions after fade-in finishes can go here if needed
         end)
 
@@ -378,6 +378,7 @@ end
 
 -- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
+
 
 -- ---------------------------------------------------------------------------------------------------------------------------------------------------
 -- Draggable function
