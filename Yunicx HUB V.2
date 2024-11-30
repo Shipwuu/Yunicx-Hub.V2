@@ -17,7 +17,6 @@ local ToggleUI = Instance.new("ImageButton")
 local HiddenFrame1 = Instance.new("Frame")
 local HiddenFrame2 = Instance.new("Frame")
 local ToggleUISetting = Instance.new("ImageButton")
-local ImageButton2 = Instance.new("ImageButton")
 
 -- Local -------------------------------------------- end
 
@@ -62,10 +61,6 @@ local ToggleUISettingUICorner = Instance.new("UICorner")
 ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
 ToggleUISettingUICorner.Parent = ToggleUISetting
 -- -------------------------------------------------------------------------
--- Apply UICorner to AddScript button
-local UICorner2 = Instance.new("UICorner")
-UICorner2.CornerRadius = UDim.new(10, 10)
-UICorner2.Parent = ImageButton2
 -- -------------------------------------------------------------------------
 local ToggleUISettingUICorner = Instance.new("UICorner")
 ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
@@ -158,14 +153,6 @@ HiddenFrame2.Position = UDim2.new(0, 0, 0, 0)
 HiddenFrame2.BackgroundTransparency = 1
 HiddenFrame2.Parent = SettingUIFrame
 -- -------------------------------------------------------------------------
-ImageButton2.Name = "AddScript"
-ImageButton2.Size = UDim2.new(0, 37, 0, 37)
-ImageButton2.Position = UDim2.new(0, 0, 0, 0)
-ImageButton2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ImageButton2.BackgroundTransparency = 0.8
-ImageButton2.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
-ImageButton2.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
-ImageButton2.Parent = SettingUIFrame
 -- -------------------------------------------------------------------------
 
 -- Local Properties -------------------------------------------- end
@@ -362,6 +349,23 @@ dragMain(ToggleUI, UltraFrame)
 -- Script UI -------------------------------------------------------------------------
 
 -- Input UI Frame--------------------------------------------------------------------------------------------------------------------------------------------------
+-- Create the AddScript ImageButton
+local ImageButton2 = Instance.new("ImageButton")
+ImageButton2.Name = "AddScript"
+ImageButton2.Size = UDim2.new(0, 37, 0, 37)
+ImageButton2.Position = UDim2.new(0, 0, 0, ToggleUISetting.Position.Y.Offset + ToggleUISetting.Size.Y.Offset)  -- Positioned after ToggleUISetting
+ImageButton2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ImageButton2.BackgroundTransparency = 0.8
+ImageButton2.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
+ImageButton2.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
+ImageButton2.Parent = SettingUIFrame
+
+-- Apply UICorner to AddScript button
+local UICorner2 = Instance.new("UICorner")
+UICorner2.CornerRadius = UDim.new(10, 10)
+UICorner2.Parent = ImageButton2
+
+
 -- Create the InputFrame
 local InputFrame = Instance.new("Frame")
 InputFrame.Name = "InputFrame"
