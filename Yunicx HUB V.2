@@ -8,13 +8,16 @@ local ShipuHub = Instance.new("ScreenGui")
 ShipuHub.Name = "ShipuHub"
 ShipuHub.Parent = game:GetService("CoreGui")
 
--- Step 3: Create MainFrame
+-- Local --------------------------------------------
+
 local MainFrame = Instance.new("Frame")
-MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
-MainFrame.Position = UDim2.new(0.6, 0, 0, -47)  -- Initial position
-MainFrame.BackgroundTransparency = 1
-MainFrame.Parent = ShipuHub
+local SecondMainFrame = Instance.new("Frame")
+local SettingUIFrame = Instance.new("Frame")
+local ToggleUI = Instance.new("ImageButton")
+
+-- Local --------------------------------------------
+
+-- UI --------------------------------------------
 
 local MainLayout = Instance.new("UIListLayout")
 MainLayout.FillDirection = Enum.FillDirection.Horizontal
@@ -23,26 +26,28 @@ MainLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 MainLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 MainLayout.Parent = MainFrame
 
--- Step 4: Create SecondMainFrame (child of MainFrame)
-local SecondMainFrame = Instance.new("Frame")
+local UICornerButton = Instance.new("UICorner")
+UICornerButton.CornerRadius = UDim.new(10, 10)
+UICornerButton.Parent = ToggleUI
+
+-- UI --------------------------------------------
+
+-- Local Properties
+
 SecondMainFrame.Name = "ScriptFile"
 SecondMainFrame.Size = UDim2.new(0.5, 60, 0, 48)  -- Updated size
 SecondMainFrame.Position = UDim2.new(0, 0, 0, 0)  -- Updated position
 SecondMainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
 SecondMainFrame.BackgroundTransparency = 0.4
 SecondMainFrame.Parent = MainFrame
-
--- Step 5: Create the SettingUIFrame (also inside MainFrame)
-local SettingUIFrame = Instance.new("Frame")
+-- -------------------------------------------------------------------------
 SettingUIFrame.Name = "UISetting"
 SettingUIFrame.Size = UDim2.new(0, 58, 0, 48)
 SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
 SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
 SettingUIFrame.BackgroundTransparency = 0.4
 SettingUIFrame.Parent = MainFrame
-
--- Step 6: Create the ToggleUI ImageButton
-local ToggleUI = Instance.new("ImageButton")
+-- -------------------------------------------------------------------------
 ToggleUI.Name = "AToggleUI"
 ToggleUI.Size = UDim2.new(0, 40, 0, 40)
 ToggleUI.Position = UDim2.new(0.57, 0, 0, 4)
@@ -51,13 +56,19 @@ ToggleUI.BackgroundTransparency = 0.8
 ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
 ToggleUI.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
 ToggleUI.Parent = ShipuHub
+-- -------------------------------------------------------------------------
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
+MainFrame.Position = UDim2.new(0.6, 0, 0, -47)  -- Initial position
+MainFrame.BackgroundTransparency = 1
+MainFrame.Parent = ShipuHub
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
 
--- Apply UICorner to ToggleUI
-local UICornerButton = Instance.new("UICorner")
-UICornerButton.CornerRadius = UDim.new(10, 10)
-UICornerButton.Parent = ToggleUI
+-- Script UI -------------------------------------------------------------------------
 
--- Step 7: Animation and Toggle Functionality
 local isOpen = true -- Track the toggle state
 local TweenService = game:GetService("TweenService")
 
@@ -172,6 +183,8 @@ local function dragMain(dragpoint, gui)
         end
     end)
 end
+
+-- Script UI -------------------------------------------------------------------------
 
 -- Apply the dragMain function to the MainFrame and ToggleUI
 dragMain(ToggleUI, MainFrame)
