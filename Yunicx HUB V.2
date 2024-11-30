@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.4.2")
+print("Log v2.4.3")
 
 
 
@@ -240,6 +240,8 @@ end
 -- Connect the ToggleUISetting button to toggle functionality
 ToggleUISetting.MouseButton1Click:Connect(toggleUI)
 -- ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 local isOpen = true -- Track the toggle state
 local TweenService = game:GetService("TweenService")
 
@@ -287,6 +289,10 @@ local function toggleUI()
         )
         openTween:Play()
 
+        -- Make SecondMainFrame and SettingUIFrame visible first
+        SecondMainFrame.Visible = true
+        SettingUIFrame.Visible = true
+
         -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
         local fadeTween2 = TweenService:Create(
             SecondMainFrame,
@@ -302,10 +308,9 @@ local function toggleUI()
         )
         fadeTween3:Play()
 
-        -- After fadein completes, make the UI visible
+        -- Wait for the fade-in animation to finish and change the image
         fadeTween3.Completed:Connect(function()
-            SecondMainFrame.Visible = true
-            SettingUIFrame.Visible = true
+            -- You can add any additional changes after fade-in finishes here if needed
         end)
 
         -- Wait for the tween to finish and change the image
