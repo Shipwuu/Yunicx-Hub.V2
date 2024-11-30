@@ -254,20 +254,25 @@ local function toggleUI()
         closeTween:Play()
 
         -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
-        local fadeTween = TweenService:Create(
+        local fadeTween2 = TweenService:Create(
             SecondMainFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
             {BackgroundTransparency = 1}
         )
-        fadeTween:Play()
+        fadeTween2:Play()
 
-        -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
-        local fadeTween = TweenService:Create(
+        local fadeTween3 = TweenService:Create(
             SettingUIFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
             {BackgroundTransparency = 1}
         )
-        fadeTween:Play()
+        fadeTween3:Play()
+
+        -- After fadeout completes, make the UI invisible
+        fadeTween3.Completed:Connect(function()
+            SecondMainFrame.Visible = false
+            SettingUIFrame.Visible = false
+        end)
 
         -- Wait for the tween to finish and change the image
         closeTween.Completed:Connect(function()
@@ -283,20 +288,25 @@ local function toggleUI()
         openTween:Play()
 
         -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
-        local fadeTween = TweenService:Create(
+        local fadeTween2 = TweenService:Create(
             SecondMainFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
             {BackgroundTransparency = 0.4}
         )
-        fadeTween:Play()
+        fadeTween2:Play()
 
-        -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
-        local fadeTween = TweenService:Create(
+        local fadeTween3 = TweenService:Create(
             SettingUIFrame,
             TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
             {BackgroundTransparency = 0.4}
         )
-        fadeTween:Play()
+        fadeTween3:Play()
+
+        -- After fadein completes, make the UI visible
+        fadeTween3.Completed:Connect(function()
+            SecondMainFrame.Visible = true
+            SettingUIFrame.Visible = true
+        end)
 
         -- Wait for the tween to finish and change the image
         openTween.Completed:Connect(function()
@@ -310,6 +320,7 @@ end
 
 -- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
+
 -- ---------------------------------------------------------------------------------------------------------------------------------------------------
 -- Draggable function
 local function dragMain(dragpoint, gui)
