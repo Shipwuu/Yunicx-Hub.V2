@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.4.9")
+print("Log v2.5")
 -- Try to Make Animasion
 
 
@@ -203,6 +203,11 @@ local function toggleUI()
             )
             fadeInTween:Play()
         end)
+
+        -- Hide ImageButton2 and ImageButton3 before the animation starts
+        ImageButton2.Visible = false
+        ImageButton3.Visible = false
+
     else
         -- Open the SettingUIFrame
         local openTween = TweenService:Create(
@@ -231,6 +236,12 @@ local function toggleUI()
             )
             fadeInTween:Play()
         end)
+
+        -- Show ImageButton2 and ImageButton3 after the animation finishes
+        openTween.Completed:Connect(function()
+            ImageButton2.Visible = true
+            ImageButton3.Visible = true
+        end)
     end
 
     -- Toggle the open state
@@ -239,6 +250,7 @@ end
 
 -- Connect the ToggleUISetting button to toggle functionality
 ToggleUISetting.MouseButton1Click:Connect(toggleUI)
+
 -- ----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
