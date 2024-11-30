@@ -136,68 +136,42 @@ end
 
 -- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
+-- Draggable function
+local function dragMain(dragpoint, gui)
+    local dragging
+    local dragStart = Vector3.new(0, 0, 0)
+    local startPos
 
--- Step 8: Draggable Script for Android and PC Devices
-local UserInputService = game:GetService("UserInputService")
+    local function update(input)
+        local delta = input.Position - dragStart
+        -- Update the position of the GUI
+        local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale, gui.Position.Y.Offset)
+        gui.Position = newPos
+    end
 
-local dragEnabled = false
-local holdStartTime = nil  -- Track the start time of the touch or mouse click
-local dragging = false
-local startPos = Vector2.new(0, 0)
-local lastPos = UDim2.new(0.6, 0, 0, 0)  -- Store the last position of the frame
-local currentPos = Vector2.new(0, 0)
-
--- Function to start dragging
-local function onDragStart(input)
-    startPos = input.Position
-    dragging = false
-    holdStartTime = tick()  -- Start timing when the touch begins
-
-    -- Change color to yellow if held for 0.1s
-    MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
-end
-
--- Function to drag the frame
-local function onDrag(input)
-    if dragging then
-        local delta = input.Position - startPos
-        MainFrame.Position = UDim2.new(0, delta.X, 0, delta.Y)
-    else
-        -- Track the hold time
-        local holdDuration = tick() - holdStartTime
-        if holdDuration >= 0.5 then
+    dragpoint.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             dragging = true
-            MainFrame.BackgroundColor3 = Color3.fromRGB(0, 255, 0) -- Green if held for 0.5s
-        elseif holdDuration >= 0.1 then
-            MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0) -- Yellow if held for 0.1s
+            dragStart = input.Position
+            startPos = gui.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
         end
-    end
+    end)
+
+    dragpoint.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            if dragging then
+                update(input)
+            end
+        end
+    end)
 end
 
--- Function to stop dragging
-local function onDragEnd(input)
-    dragging = false
-    MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)  -- Reset to white when released
-
-    -- Save the current position when dragging stops
-    lastPos = MainFrame.Position
-end
-
--- Connect the input began, changed, and ended events
-UserInputService.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
-        onDragStart(input)
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement then
-        onDrag(input)
-    end
-end)
-
-UserInputService.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
-        onDragEnd(input)
-    end
-end)
+-- Apply the dragMain function to the MainFrame and ToggleUI
+dragMain(ToggleUI, MainFrame)
+dragMain(ToggleUI, UltraFrame)
