@@ -1,7 +1,7 @@
 -- Script log v.2
 
-print("Log v2.4.3")
-
+print("Log v2.4.4")
+-- Try to Make Animasion
 
 
 
@@ -270,10 +270,40 @@ local function toggleUI()
         )
         fadeTween3:Play()
 
-        -- After fadeout completes, make the UI invisible
+        -- Fade out children of SecondMainFrame and SettingUIFrame
+        for _, child in pairs(SecondMainFrame:GetChildren()) do
+            if child:IsA("Frame") then
+                local fadeChildTween = TweenService:Create(
+                    child,
+                    TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                    {BackgroundTransparency = 1}
+                )
+                fadeChildTween:Play()
+            end
+        end
+
+        for _, child in pairs(SettingUIFrame:GetChildren()) do
+            if child:IsA("Frame") then
+                local fadeChildTween = TweenService:Create(
+                    child,
+                    TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                    {BackgroundTransparency = 1}
+                )
+                fadeChildTween:Play()
+            end
+        end
+
+        -- After fadeout completes, make the UI and children invisible
         fadeTween3.Completed:Connect(function()
             SecondMainFrame.Visible = false
             SettingUIFrame.Visible = false
+            -- Also set children visibility to false after animation
+            for _, child in pairs(SecondMainFrame:GetChildren()) do
+                child.Visible = false
+            end
+            for _, child in pairs(SettingUIFrame:GetChildren()) do
+                child.Visible = false
+            end
         end)
 
         -- Wait for the tween to finish and change the image
@@ -308,9 +338,32 @@ local function toggleUI()
         )
         fadeTween3:Play()
 
+        -- Fade in children of SecondMainFrame and SettingUIFrame
+        for _, child in pairs(SecondMainFrame:GetChildren()) do
+            if child:IsA("Frame") then
+                local fadeChildTween = TweenService:Create(
+                    child,
+                    TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                    {BackgroundTransparency = 0.4}
+                )
+                fadeChildTween:Play()
+            end
+        end
+
+        for _, child in pairs(SettingUIFrame:GetChildren()) do
+            if child:IsA("Frame") then
+                local fadeChildTween = TweenService:Create(
+                    child,
+                    TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                    {BackgroundTransparency = 0.4}
+                )
+                fadeChildTween:Play()
+            end
+        end
+
         -- Wait for the fade-in animation to finish and change the image
         fadeTween3.Completed:Connect(function()
-            -- You can add any additional changes after fade-in finishes here if needed
+            -- Additional actions after fade-in finishes can go here if needed
         end)
 
         -- Wait for the tween to finish and change the image
