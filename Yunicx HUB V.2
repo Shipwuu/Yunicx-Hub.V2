@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.4.7")
+print("Log v2.4.8")
 -- Try to Make Animasion
 
 
@@ -318,6 +318,10 @@ local function toggleUI()
         )
         closeTween:Play()
 
+        -- Set parent frames to visible before animation
+        SecondMainFrame.Visible = true
+        SettingUIFrame.Visible = true
+
         -- Fade out Image in SecondMainFrame and SettingUIFrame if they exist
         local secondMainImage = SecondMainFrame:FindFirstChildOfClass("ImageLabel") or (SecondMainFrame:FindFirstChildOfClass("ImageButton") and SecondMainFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"))
         local settingUIFrameImage = SettingUIFrame:FindFirstChildOfClass("ImageLabel") or (SettingUIFrame:FindFirstChildOfClass("ImageButton") and SettingUIFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"))
@@ -363,21 +367,10 @@ local function toggleUI()
             end
         end
 
-        -- After all animations finish, hide the parent frames
+        -- Wait for the tween to finish, then set Visible to false
         closeTween.Completed:Connect(function()
             SecondMainFrame.Visible = false
             SettingUIFrame.Visible = false
-            -- Also set children visibility to false after animation
-            for _, child in pairs(SecondMainFrame:GetChildren()) do
-                child.Visible = false
-            end
-            for _, child in pairs(SettingUIFrame:GetChildren()) do
-                child.Visible = false
-            end
-        end)
-
-        -- Wait for the tween to finish and change the image
-        closeTween.Completed:Connect(function()
             ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Reset to the default image
         end)
     end
