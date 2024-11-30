@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.5.4")
+print("Log v2.5.5")
 -- Try to Make Animasionn
 
 
@@ -178,6 +178,229 @@ HiddenFrame2.Position = UDim2.new(0, 0, 0, 0)
 HiddenFrame2.BackgroundTransparency = 1
 HiddenFrame2.Parent = SettingUIFrame
 -- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+
+-- Local Properties -------------------------------------------- end
+
+-- Script UI -------------------------------------------------------------------------
+local isOpen = false -- Track the toggle state
+local TweenService = game:GetService("TweenService")
+
+local function toggleUI()
+    if isOpen then
+        -- Close the SettingUIFrame
+        local closeTween = TweenService:Create(
+            SettingUIFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0, 58, 0, 48)}
+        )
+        closeTween:Play()
+
+        -- Fade out and change the image back to the right arrow
+        local closeImageTween = TweenService:Create(
+            ToggleUISetting,
+            TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {ImageTransparency = 1}
+        )
+        closeImageTween:Play()
+        
+        -- Wait for the fade-out to finish, then change the image
+        closeImageTween.Completed:Connect(function()
+            ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- Arrow pointing to the right
+            -- Fade in the new image
+            local fadeInTween = TweenService:Create(
+                ToggleUISetting,
+                TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                {ImageTransparency = 0}
+            )
+            fadeInTween:Play()
+        end)
+
+        -- Hide ImageButton2 and ImageButton3 before the animation starts
+        ImageButton2.Visible = true
+        ImageButton3.Visible = true
+
+    else
+        -- Open the SettingUIFrame
+        local openTween = TweenService:Create(
+            SettingUIFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0.2, 25, 0, 48)}
+        )
+        openTween:Play()
+
+        -- Fade out and change the image to the left arrow
+        local openImageTween = TweenService:Create(
+            ToggleUISetting,
+            TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {ImageTransparency = 1}
+        )
+        openImageTween:Play()
+
+        -- Wait for the fade-out to finish, then change the image
+        openImageTween.Completed:Connect(function()
+            ToggleUISetting.Image = "rbxthumb://type=Asset&id=117802441000023&w=420&h=420" -- Arrow pointing to the left
+            -- Fade in the new image
+            local fadeInTween = TweenService:Create(
+                ToggleUISetting,
+                TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                {ImageTransparency = 0}
+            )
+            fadeInTween:Play()
+        end)
+
+        -- Show ImageButton2 and ImageButton3 after the animation finishes
+        openTween.Completed:Connect(function()
+            ImageButton2.Visible = false
+            ImageButton3.Visible = false
+        end)
+    end
+
+    -- Toggle the open state
+    isOpen = not isOpen
+end
+
+-- Connect the ToggleUISetting button to toggle functionality
+ToggleUISetting.MouseButton1Click:Connect(toggleUI)
+
+-- ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+local isOpen = true -- Track the toggle state
+local TweenService = game:GetService("TweenService")
+
+local function toggleUI()
+    if isOpen then
+        -- Close the MainFrame (shrink it)
+        local closeTween = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0, 0, 0, 47)} -- Shrink the width
+        )
+        closeTween:Play()
+
+        -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
+        local fadeTween2 = TweenService:Create(
+            SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 1}
+        )
+        fadeTween2:Play()
+
+        local fadeTween3 = TweenService:Create(
+            SettingUIFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 1}
+        )
+        fadeTween3:Play()
+
+        -- After fadeout completes, make the UI invisible
+        fadeTween3.Completed:Connect(function()
+            SecondMainFrame.Visible = false
+            SettingUIFrame.Visible = false
+        end)
+
+        -- Wait for the tween to finish and change the image
+        closeTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Reset to the default image
+        end)
+    else
+        -- Open the MainFrame (expand it)
+        local openTween = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0.4, 0, 0, 47)} -- Expand to original size
+        )
+        openTween:Play()
+
+        -- Make SecondMainFrame and SettingUIFrame visible first
+        SecondMainFrame.Visible = true
+        SettingUIFrame.Visible = true
+
+        -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
+        local fadeTween2 = TweenService:Create(
+            SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 0.4}
+        )
+        fadeTween2:Play()
+
+        local fadeTween3 = TweenService:Create(
+            SettingUIFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 0.4}
+        )
+        fadeTween3:Play()
+
+        -- Wait for the fade-in animation to finish and change the image
+        fadeTween3.Completed:Connect(function()
+            -- You can add any additional changes after fade-in finishes here if needed
+        end)
+
+        -- Wait for the tween to finish and change the image
+        openTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Set to the pressed image
+        end)
+    end
+
+    -- Toggle the open state
+    isOpen = not isOpen
+end
+
+-- Connect the ToggleUI ImageButton to toggle functionality
+ToggleUI.MouseButton1Click:Connect(toggleUI)
+
+-- ---------------------------------------------------------------------------------------------------------------------------------------------------
+-- Draggable function
+local function dragMain(dragpoint, gui)
+    local dragging
+    local dragStart = Vector3.new(0, 0, 0)
+    local startPos
+
+    -- Function to update the position during drag
+    local function update(input)
+        -- Check if startPos is valid before using it
+        if startPos then
+            local delta = input.Position - dragStart
+            -- Update the position of the GUI
+            local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale, gui.Position.Y.Offset)
+            gui.Position = newPos
+        end
+    end
+
+    -- Input handling
+    dragpoint.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = gui.Position -- Ensure startPos is assigned here
+
+            -- Reset dragging state when the input ends
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    -- Handle continuous movement when input changes
+    dragpoint.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            if dragging then
+                update(input)
+            end
+        end
+    end)
+end
+
+-- Apply the dragMain function to the MainFrame and ToggleUI
+dragMain(ToggleUI, MainFrame)
+dragMain(ToggleUI, UltraFrame)
+
+
+-- Script UI -------------------------------------------------------------------------
+
 -- Input UI Frame--------------------------------------------------------------------------------------------------------------------------------------------------
 -- Custom UI
 -- Create the AddScript ImageButton
@@ -191,11 +414,13 @@ ImageButton3.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- D
 ImageButton3.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
 ImageButton3.Parent = SettingUIFrame
 
--- Apply UICorner to AddScript button
+local UICorner2 = Instance.new("UICorner")
+UICorner2.CornerRadius = UDim.new(10, 10)
+UICorner2.Parent = ImageButton3
+
 local UICorner2 = Instance.new("UICorner")
 UICorner2.CornerRadius = UDim.new(10, 10)
 UICorner2.Parent = ImageButton2
--- Create the AddScript ImageButton
 
 ImageButton2.Name = "AddScript"
 ImageButton2.Size = UDim2.new(0, 37, 0, 37)
@@ -357,227 +582,5 @@ CloseButton.MouseButton1Click:Connect(function()
     InputFrame.Visible = false
 end)
 -- Input UI Frame--------------------------------------------------------------------------------------------------------------------------------------------------
--- -------------------------------------------------------------------------
-
--- Local Properties -------------------------------------------- end
-
--- Script UI -------------------------------------------------------------------------
-local isOpen = false -- Track the toggle state
-local TweenService = game:GetService("TweenService")
-
-local function toggleUI()
-    if isOpen then
-        -- Close the SettingUIFrame
-        local closeTween = TweenService:Create(
-            SettingUIFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0, 58, 0, 48)}
-        )
-        closeTween:Play()
-
-        -- Fade out and change the image back to the right arrow
-        local closeImageTween = TweenService:Create(
-            ToggleUISetting,
-            TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {ImageTransparency = 1}
-        )
-        closeImageTween:Play()
-        
-        -- Wait for the fade-out to finish, then change the image
-        closeImageTween.Completed:Connect(function()
-            ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- Arrow pointing to the right
-            -- Fade in the new image
-            local fadeInTween = TweenService:Create(
-                ToggleUISetting,
-                TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-                {ImageTransparency = 0}
-            )
-            fadeInTween:Play()
-        end)
-
-        -- Hide ImageButton2 and ImageButton3 before the animation starts
-        ImageButton2.Visible = false
-        ImageButton3.Visible = false
-
-    else
-        -- Open the SettingUIFrame
-        local openTween = TweenService:Create(
-            SettingUIFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0.2, 25, 0, 48)}
-        )
-        openTween:Play()
-
-        -- Fade out and change the image to the left arrow
-        local openImageTween = TweenService:Create(
-            ToggleUISetting,
-            TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {ImageTransparency = 1}
-        )
-        openImageTween:Play()
-
-        -- Wait for the fade-out to finish, then change the image
-        openImageTween.Completed:Connect(function()
-            ToggleUISetting.Image = "rbxthumb://type=Asset&id=117802441000023&w=420&h=420" -- Arrow pointing to the left
-            -- Fade in the new image
-            local fadeInTween = TweenService:Create(
-                ToggleUISetting,
-                TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-                {ImageTransparency = 0}
-            )
-            fadeInTween:Play()
-        end)
-
-        -- Show ImageButton2 and ImageButton3 after the animation finishes
-        openTween.Completed:Connect(function()
-            ImageButton2.Visible = true
-            ImageButton3.Visible = true
-        end)
-    end
-
-    -- Toggle the open state
-    isOpen = not isOpen
-end
-
--- Connect the ToggleUISetting button to toggle functionality
-ToggleUISetting.MouseButton1Click:Connect(toggleUI)
-
--- ----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-local isOpen = true -- Track the toggle state
-local TweenService = game:GetService("TweenService")
-
-local function toggleUI()
-    if isOpen then
-        -- Close the MainFrame (shrink it)
-        local closeTween = TweenService:Create(
-            MainFrame,
-            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0, 0, 0, 47)} -- Shrink the width
-        )
-        closeTween:Play()
-
-        -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
-        local fadeTween2 = TweenService:Create(
-            SecondMainFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {BackgroundTransparency = 1}
-        )
-        fadeTween2:Play()
-
-        local fadeTween3 = TweenService:Create(
-            SettingUIFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {BackgroundTransparency = 1}
-        )
-        fadeTween3:Play()
-
-        -- After fadeout completes, make the UI invisible
-        fadeTween3.Completed:Connect(function()
-            SecondMainFrame.Visible = false
-            SettingUIFrame.Visible = false
-        end)
-
-        -- Wait for the tween to finish and change the image
-        closeTween.Completed:Connect(function()
-            ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Reset to the default image
-        end)
-    else
-        -- Open the MainFrame (expand it)
-        local openTween = TweenService:Create(
-            MainFrame,
-            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0.4, 0, 0, 47)} -- Expand to original size
-        )
-        openTween:Play()
-
-        -- Make SecondMainFrame and SettingUIFrame visible first
-        SecondMainFrame.Visible = true
-        SettingUIFrame.Visible = true
-
-        -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
-        local fadeTween2 = TweenService:Create(
-            SecondMainFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {BackgroundTransparency = 0.4}
-        )
-        fadeTween2:Play()
-
-        local fadeTween3 = TweenService:Create(
-            SettingUIFrame,
-            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {BackgroundTransparency = 0.4}
-        )
-        fadeTween3:Play()
-
-        -- Wait for the fade-in animation to finish and change the image
-        fadeTween3.Completed:Connect(function()
-            -- You can add any additional changes after fade-in finishes here if needed
-        end)
-
-        -- Wait for the tween to finish and change the image
-        openTween.Completed:Connect(function()
-            ToggleUI.Image = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Set to the pressed image
-        end)
-    end
-
-    -- Toggle the open state
-    isOpen = not isOpen
-end
-
--- Connect the ToggleUI ImageButton to toggle functionality
-ToggleUI.MouseButton1Click:Connect(toggleUI)
-
--- ---------------------------------------------------------------------------------------------------------------------------------------------------
--- Draggable function
-local function dragMain(dragpoint, gui)
-    local dragging
-    local dragStart = Vector3.new(0, 0, 0)
-    local startPos
-
-    -- Function to update the position during drag
-    local function update(input)
-        -- Check if startPos is valid before using it
-        if startPos then
-            local delta = input.Position - dragStart
-            -- Update the position of the GUI
-            local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale, gui.Position.Y.Offset)
-            gui.Position = newPos
-        end
-    end
-
-    -- Input handling
-    dragpoint.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = gui.Position -- Ensure startPos is assigned here
-
-            -- Reset dragging state when the input ends
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
-                end
-            end)
-        end
-    end)
-
-    -- Handle continuous movement when input changes
-    dragpoint.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            if dragging then
-                update(input)
-            end
-        end
-    end)
-end
-
--- Apply the dragMain function to the MainFrame and ToggleUI
-dragMain(ToggleUI, MainFrame)
-dragMain(ToggleUI, UltraFrame)
-
-
--- Script UI -------------------------------------------------------------------------
 
 -- Script log v.2
