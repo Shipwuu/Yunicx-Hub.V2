@@ -1,4 +1,4 @@
--- Step 1: Create the ScreenGui
+-- Script log v.2
 local existingScreenGui = game:GetService("CoreGui"):FindFirstChild("ShipuHub")
 if existingScreenGui then
     existingScreenGui:Destroy() -- Destroy the previous ScreenGui if it exists
@@ -16,6 +16,8 @@ local SettingUIFrame = Instance.new("Frame")
 local ToggleUI = Instance.new("ImageButton")
 local HiddenFrame1 = Instance.new("Frame")
 local HiddenFrame2 = Instance.new("Frame")
+local ToggleUISetting = Instance.new("ImageButton")
+
 
 -- Local -------------------------------------------- end
 
@@ -64,7 +66,6 @@ local ToggleUISettingUICorner = Instance.new("UICorner")
 ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
 ToggleUISettingUICorner.Parent = ToggleUI
 -- -------------------------------------------------------------------------
-
 local SecondMainUIGradient = Instance.new("UIGradient")
 SecondMainUIGradient.Color = ColorSequence.new({
     ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
@@ -116,6 +117,14 @@ SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
 SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
 SettingUIFrame.BackgroundTransparency = 0.4
 SettingUIFrame.Parent = MainFrame
+-- -------------------------------------------------------------------------
+ToggleUISetting.Name = "ToggleUISetting"
+ToggleUISetting.Size = UDim2.new(0, 37, 0, 37)
+ToggleUISetting.Position = UDim2.new(0, 0, 0, HiddenFrame.Size.Y.Offset)  -- Position based on HiddenFrame height
+ToggleUISetting.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleUISetting.BackgroundTransparency = 0.8
+ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- The arrow pointing to the right
+ToggleUISetting.Parent = SettingUIFrame
 -- -------------------------------------------------------------------------
 ToggleUI.Name = "AToggleUI"
 ToggleUI.Size = UDim2.new(0, 40, 0, 40)
@@ -270,3 +279,4 @@ dragMain(ToggleUI, UltraFrame)
 
 
 -- Script UI -------------------------------------------------------------------------
+-- Script log v.2
