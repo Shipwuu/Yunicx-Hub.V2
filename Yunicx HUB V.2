@@ -8,31 +8,105 @@ local ShipuHub = Instance.new("ScreenGui")
 ShipuHub.Name = "ShipuHub"
 ShipuHub.Parent = game:GetService("CoreGui")
 
--- Local --------------------------------------------
+-- Local -------------------------------------------- start
 
 local MainFrame = Instance.new("Frame")
 local SecondMainFrame = Instance.new("Frame")
 local SettingUIFrame = Instance.new("Frame")
 local ToggleUI = Instance.new("ImageButton")
+local HiddenFrame1 = Instance.new("Frame")
+local HiddenFrame2 = Instance.new("Frame")
 
--- Local --------------------------------------------
+-- Local -------------------------------------------- end
 
--- UI --------------------------------------------
-
+-- UI -------------------------------------------- start
+-- Layout for MainFrame
 local MainLayout = Instance.new("UIListLayout")
 MainLayout.FillDirection = Enum.FillDirection.Horizontal
 MainLayout.Padding = UDim.new(0, 9)
 MainLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 MainLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 MainLayout.Parent = MainFrame
+-- -------------------------------------------------------------------------
+-- Layout for SettingUIFramr
+local SecondButtonLayout = Instance.new("UIListLayout")
+SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
+SecondButtonLayout.Padding = UDim.new(0, 5)
+SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+SecondButtonLayout.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+-- Layout for SecondMainFrame
+local SecondButtonLayout = Instance.new("UIListLayout")
+SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
+SecondButtonLayout.Padding = UDim.new(0, 5)
+SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+SecondButtonLayout.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = MainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+local ToggleUISettingUICorner = Instance.new("UICorner")
+ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
+ToggleUISettingUICorner.Parent = ToggleUISetting
+-- -------------------------------------------------------------------------
+local SecondMainUIGradient = Instance.new("UIGradient")
+SecondMainUIGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50))  -- A softer gradient
+})
+SecondMainUIGradient.Rotation = 0 -- Initial rotation
+SecondMainUIGradient.Parent = SecondMainFrame
 
-local UICornerButton = Instance.new("UICorner")
-UICornerButton.CornerRadius = UDim.new(10, 10)
-UICornerButton.Parent = ToggleUI
+local TweenService = game:GetService("TweenService")
+local rotationTween = TweenService:Create(
+    SecondMainUIGradient,
+    TweenInfo.new(3, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut, -1, true),
+    {Rotation = 360}
+)
 
--- UI --------------------------------------------
+rotationTween:Play()
+-- -------------------------------------------------------------------------
+local SettingUIFrameUIGradient = Instance.new("UIGradient")
+SettingUIFrameUIGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50)) -- A softer gradient
+})
+SettingUIFrameUIGradient.Rotation = 0
+SettingUIFrameUIGradient.Parent = SettingUIFrame
 
--- Local Properties
+local TweenService = game:GetService("TweenService")
+local rotationTween = TweenService:Create(
+    SettingUIFrameUIGradient,
+    TweenInfo.new(3, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut, -1, true),
+    {Rotation = 360}
+)
+
+rotationTween:Play()
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+
+-- UI -------------------------------------------- end
+
+-- Local Properties -------------------------------------------- start
 
 SecondMainFrame.Name = "ScriptFile"
 SecondMainFrame.Size = UDim2.new(0.5, 60, 0, 48)  -- Updated size
@@ -62,10 +136,22 @@ MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
 MainFrame.Position = UDim2.new(0.6, 0, 0, -47)  -- Initial position
 MainFrame.BackgroundTransparency = 1
 MainFrame.Parent = ShipuHub
+-- ------------------------------------------------------------------------
+HiddenFrame1.Name = "AFrame"
+HiddenFrame1.Size = UDim2.new(0, 5, 0, 30)
+HiddenFrame1.Position = UDim2.new(0, 0, 0, 0)
+HiddenFrame1.BackgroundTransparency = 1
+HiddenFrame1.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+HiddenFrame2.Name = "ZFrame"
+HiddenFrame2.Size = UDim2.new(0, 5, 0, 30)
+HiddenFrame2.Position = UDim2.new(0, 0, 0, 0)
+HiddenFrame2.BackgroundTransparency = 1
+HiddenFrame2.Parent = SettingUIFrame
 -- -------------------------------------------------------------------------
 -- -------------------------------------------------------------------------
--- -------------------------------------------------------------------------
--- -------------------------------------------------------------------------
+
+-- Local Properties -------------------------------------------- end
 
 -- Script UI -------------------------------------------------------------------------
 
@@ -139,8 +225,7 @@ end
 
 -- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
-
-
+-- -------------------------------------------------------------------------
 -- Draggable function
 local function dragMain(dragpoint, gui)
     local dragging
