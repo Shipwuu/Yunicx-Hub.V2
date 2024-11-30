@@ -45,7 +45,139 @@ local CloseButton = Instance.new("ImageButton")
 
 -- Local -------------------------------------------- end
 
+-- UI -------------------------------------------- start
+-- Layout for MainFrame
+local MainLayout = Instance.new("UIListLayout")
+MainLayout.FillDirection = Enum.FillDirection.Horizontal
+MainLayout.Padding = UDim.new(0, 9)
+MainLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+MainLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+MainLayout.Parent = MainFrame
+-- -------------------------------------------------------------------------
+-- Layout for SettingUIFramr
+local SecondButtonLayout = Instance.new("UIListLayout")
+SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
+SecondButtonLayout.Padding = UDim.new(0, 5)
+SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+SecondButtonLayout.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+-- Layout for SecondMainFrame
+local SecondButtonLayout = Instance.new("UIListLayout")
+SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
+SecondButtonLayout.Padding = UDim.new(0, 5)
+SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+SecondButtonLayout.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = MainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+local ToggleUISettingUICorner = Instance.new("UICorner")
+ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
+ToggleUISettingUICorner.Parent = ToggleUISetting
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+local ToggleUISettingUICorner = Instance.new("UICorner")
+ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
+ToggleUISettingUICorner.Parent = ToggleUI
+-- -------------------------------------------------------------------------
+local SecondMainUIGradient = Instance.new("UIGradient")
+SecondMainUIGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50))  -- A softer gradient
+})
+SecondMainUIGradient.Rotation = 0 -- Initial rotation
+SecondMainUIGradient.Parent = SecondMainFrame
 
+local TweenService = game:GetService("TweenService")
+local rotationTween = TweenService:Create(
+    SecondMainUIGradient,
+    TweenInfo.new(3, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut, -1, true),
+    {Rotation = 360}
+)
+
+rotationTween:Play()
+-- -------------------------------------------------------------------------
+local SettingUIFrameUIGradient = Instance.new("UIGradient")
+SettingUIFrameUIGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50)) -- A softer gradient
+})
+SettingUIFrameUIGradient.Rotation = 0
+SettingUIFrameUIGradient.Parent = SettingUIFrame
+
+local TweenService = game:GetService("TweenService")
+local rotationTween = TweenService:Create(
+    SettingUIFrameUIGradient,
+    TweenInfo.new(3, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut, -1, true),
+    {Rotation = 360}
+)
+
+rotationTween:Play()
+
+-- UI -------------------------------------------- end
+
+-- Local Properties -------------------------------------------- start
+
+SecondMainFrame.Name = "ScriptFile"
+SecondMainFrame.Size = UDim2.new(0.5, 60, 0, 48)  -- Updated size
+SecondMainFrame.Position = UDim2.new(0, 0, 0, 0)  -- Updated position
+SecondMainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
+SecondMainFrame.BackgroundTransparency = 0.4
+SecondMainFrame.Parent = MainFrame
+-- -------------------------------------------------------------------------
+SettingUIFrame.Name = "UISetting"
+SettingUIFrame.Size = UDim2.new(0, 58, 0, 48)
+SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
+SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
+SettingUIFrame.BackgroundTransparency = 0.4
+SettingUIFrame.Parent = MainFrame
+-- -------------------------------------------------------------------------
+ToggleUISetting.Name = "ToggleUISetting"
+ToggleUISetting.Size = UDim2.new(0, 37, 0, 37)
+ToggleUISetting.Position = UDim2.new(0, 0, 0, 0)
+ToggleUISetting.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleUISetting.BackgroundTransparency = 0.8
+ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- The arrow pointing to the right
+ToggleUISetting.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+ToggleUI.Name = "AToggleUI"
+ToggleUI.Size = UDim2.new(0, 40, 0, 40)
+ToggleUI.Position = UDim2.new(0.57, 0, 0, 4)
+ToggleUI.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleUI.BackgroundTransparency = 0.8
+ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
+ToggleUI.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
+ToggleUI.Parent = MainFrame
+-- -------------------------------------------------------------------------
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
+MainFrame.Position = UDim2.new(0.6, 0, 0, -47)  -- Initial position
+MainFrame.BackgroundTransparency = 1
+MainFrame.Parent = ShipuHub
+-- ------------------------------------------------------------------------
+HiddenFrame1.Name = "AFrame"
+HiddenFrame1.Size = UDim2.new(0, 5, 0, 30)
+HiddenFrame1.Position = UDim2.new(0, 0, 0, 0)
+HiddenFrame1.BackgroundTransparency = 1
+HiddenFrame1.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+HiddenFrame2.Name = "ZFrame"
+HiddenFrame2.Size = UDim2.new(0, 5, 0, 30)
+HiddenFrame2.Position = UDim2.new(0, 0, 0, 0)
+HiddenFrame2.BackgroundTransparency = 1
+HiddenFrame2.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
 -- Input UI Frame--------------------------------------------------------------------------------------------------------------------------------------------------
 -- Custom UI
 -- Create the AddScript ImageButton
@@ -227,142 +359,6 @@ CloseButton.MouseButton1Click:Connect(function()
     InputFrame.Visible = false
 end)
 -- Input UI Frame--------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
--- UI -------------------------------------------- start
--- Layout for MainFrame
-local MainLayout = Instance.new("UIListLayout")
-MainLayout.FillDirection = Enum.FillDirection.Horizontal
-MainLayout.Padding = UDim.new(0, 9)
-MainLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-MainLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-MainLayout.Parent = MainFrame
--- -------------------------------------------------------------------------
--- Layout for SettingUIFramr
-local SecondButtonLayout = Instance.new("UIListLayout")
-SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
-SecondButtonLayout.Padding = UDim.new(0, 5)
-SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
-SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-SecondButtonLayout.Parent = SettingUIFrame
--- -------------------------------------------------------------------------
--- Layout for SecondMainFrame
-local SecondButtonLayout = Instance.new("UIListLayout")
-SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
-SecondButtonLayout.Padding = UDim.new(0, 5)
-SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-SecondButtonLayout.Parent = SecondMainFrame
--- -------------------------------------------------------------------------
-local SecondMainUICorner = Instance.new("UICorner")
-SecondMainUICorner.CornerRadius = UDim.new(10, 10)
-SecondMainUICorner.Parent = MainFrame
--- -------------------------------------------------------------------------
-local SecondMainUICorner = Instance.new("UICorner")
-SecondMainUICorner.CornerRadius = UDim.new(10, 10)
-SecondMainUICorner.Parent = SecondMainFrame
--- -------------------------------------------------------------------------
-local SecondMainUICorner = Instance.new("UICorner")
-SecondMainUICorner.CornerRadius = UDim.new(10, 10)
-SecondMainUICorner.Parent = SettingUIFrame
--- -------------------------------------------------------------------------
-local ToggleUISettingUICorner = Instance.new("UICorner")
-ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
-ToggleUISettingUICorner.Parent = ToggleUISetting
--- -------------------------------------------------------------------------
--- -------------------------------------------------------------------------
-local ToggleUISettingUICorner = Instance.new("UICorner")
-ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
-ToggleUISettingUICorner.Parent = ToggleUI
--- -------------------------------------------------------------------------
-local SecondMainUIGradient = Instance.new("UIGradient")
-SecondMainUIGradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50))  -- A softer gradient
-})
-SecondMainUIGradient.Rotation = 0 -- Initial rotation
-SecondMainUIGradient.Parent = SecondMainFrame
-
-local TweenService = game:GetService("TweenService")
-local rotationTween = TweenService:Create(
-    SecondMainUIGradient,
-    TweenInfo.new(3, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut, -1, true),
-    {Rotation = 360}
-)
-
-rotationTween:Play()
--- -------------------------------------------------------------------------
-local SettingUIFrameUIGradient = Instance.new("UIGradient")
-SettingUIFrameUIGradient.Color = ColorSequence.new({
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50)) -- A softer gradient
-})
-SettingUIFrameUIGradient.Rotation = 0
-SettingUIFrameUIGradient.Parent = SettingUIFrame
-
-local TweenService = game:GetService("TweenService")
-local rotationTween = TweenService:Create(
-    SettingUIFrameUIGradient,
-    TweenInfo.new(3, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut, -1, true),
-    {Rotation = 360}
-)
-
-rotationTween:Play()
-
--- UI -------------------------------------------- end
-
--- Local Properties -------------------------------------------- start
-
-SecondMainFrame.Name = "ScriptFile"
-SecondMainFrame.Size = UDim2.new(0.5, 60, 0, 48)  -- Updated size
-SecondMainFrame.Position = UDim2.new(0, 0, 0, 0)  -- Updated position
-SecondMainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
-SecondMainFrame.BackgroundTransparency = 0.4
-SecondMainFrame.Parent = MainFrame
--- -------------------------------------------------------------------------
-SettingUIFrame.Name = "UISetting"
-SettingUIFrame.Size = UDim2.new(0, 58, 0, 48)
-SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
-SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
-SettingUIFrame.BackgroundTransparency = 0.4
-SettingUIFrame.Parent = MainFrame
--- -------------------------------------------------------------------------
-ToggleUISetting.Name = "ToggleUISetting"
-ToggleUISetting.Size = UDim2.new(0, 37, 0, 37)
-ToggleUISetting.Position = UDim2.new(0, 0, 0, 0)
-ToggleUISetting.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ToggleUISetting.BackgroundTransparency = 0.8
-ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- The arrow pointing to the right
-ToggleUISetting.Parent = SettingUIFrame
--- -------------------------------------------------------------------------
-ToggleUI.Name = "AToggleUI"
-ToggleUI.Size = UDim2.new(0, 40, 0, 40)
-ToggleUI.Position = UDim2.new(0.57, 0, 0, 4)
-ToggleUI.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-ToggleUI.BackgroundTransparency = 0.8
-ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
-ToggleUI.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
-ToggleUI.Parent = MainFrame
--- -------------------------------------------------------------------------
-MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
-MainFrame.Position = UDim2.new(0.6, 0, 0, -47)  -- Initial position
-MainFrame.BackgroundTransparency = 1
-MainFrame.Parent = ShipuHub
--- ------------------------------------------------------------------------
-HiddenFrame1.Name = "AFrame"
-HiddenFrame1.Size = UDim2.new(0, 5, 0, 30)
-HiddenFrame1.Position = UDim2.new(0, 0, 0, 0)
-HiddenFrame1.BackgroundTransparency = 1
-HiddenFrame1.Parent = SecondMainFrame
--- -------------------------------------------------------------------------
-HiddenFrame2.Name = "ZFrame"
-HiddenFrame2.Size = UDim2.new(0, 5, 0, 30)
-HiddenFrame2.Position = UDim2.new(0, 0, 0, 0)
-HiddenFrame2.BackgroundTransparency = 1
-HiddenFrame2.Parent = SettingUIFrame
--- -------------------------------------------------------------------------
 -- -------------------------------------------------------------------------
 
 -- Local Properties -------------------------------------------- end
