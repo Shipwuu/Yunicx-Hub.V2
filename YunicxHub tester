@@ -1,0 +1,585 @@
+-- Script log v.2
+
+print("Log v2.5.1")
+-- Try to Make Animasionn
+
+
+
+
+
+
+
+-- Script log v.2
+
+
+local existingScreenGui = game:GetService("CoreGui"):FindFirstChild("ShipuHub")
+if existingScreenGui then
+    existingScreenGui:Destroy() -- Destroy the previous ScreenGui if it exists
+end
+
+local ShipuHub = Instance.new("ScreenGui")
+ShipuHub.Name = "ShipuHub"
+ShipuHub.Parent = game:GetService("CoreGui")
+
+-- Local -------------------------------------------- start
+
+local MainFrame = Instance.new("Frame")
+local SecondMainFrame = Instance.new("Frame")
+local SettingUIFrame = Instance.new("Frame")
+local ToggleUI = Instance.new("ImageButton")
+local HiddenFrame1 = Instance.new("Frame")
+local HiddenFrame2 = Instance.new("Frame")
+local ToggleUISetting = Instance.new("ImageButton")
+local ImageButton3 = Instance.new("ImageButton")
+local InputNameBox = Instance.new("TextBox")
+local InputFrame = Instance.new("Frame")
+local ImageButton2 = Instance.new("ImageButton")
+local TitleFrame = Instance.new("TextLabel")
+local InputNameFrame = Instance.new("Frame")
+local InputNameLabel = Instance.new("TextLabel")
+local InputScriptFrame = Instance.new("Frame")
+local InputScriptLabel = Instance.new("TextLabel")
+local InputScriptTextBox = Instance.new("TextBox")
+local AddScriptButton = Instance.new("TextButton")
+local CloseButton = Instance.new("ImageButton")
+
+-- Local -------------------------------------------- end
+
+-- UI -------------------------------------------- start
+-- Layout for MainFrame
+local MainLayout = Instance.new("UIListLayout")
+MainLayout.FillDirection = Enum.FillDirection.Horizontal
+MainLayout.Padding = UDim.new(0, 9)
+MainLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+MainLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+MainLayout.Parent = MainFrame
+-- -------------------------------------------------------------------------
+-- Layout for SettingUIFramr
+local SecondButtonLayout = Instance.new("UIListLayout")
+SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
+SecondButtonLayout.Padding = UDim.new(0, 5)
+SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+SecondButtonLayout.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+-- Layout for SecondMainFrame
+local SecondButtonLayout = Instance.new("UIListLayout")
+SecondButtonLayout.FillDirection = Enum.FillDirection.Horizontal
+SecondButtonLayout.Padding = UDim.new(0, 5)
+SecondButtonLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+SecondButtonLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+SecondButtonLayout.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = MainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+local SecondMainUICorner = Instance.new("UICorner")
+SecondMainUICorner.CornerRadius = UDim.new(10, 10)
+SecondMainUICorner.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+local ToggleUISettingUICorner = Instance.new("UICorner")
+ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
+ToggleUISettingUICorner.Parent = ToggleUISetting
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+local ToggleUISettingUICorner = Instance.new("UICorner")
+ToggleUISettingUICorner.CornerRadius = UDim.new(10, 10)
+ToggleUISettingUICorner.Parent = ToggleUI
+-- -------------------------------------------------------------------------
+local SecondMainUIGradient = Instance.new("UIGradient")
+SecondMainUIGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50))  -- A softer gradient
+})
+SecondMainUIGradient.Rotation = 0 -- Initial rotation
+SecondMainUIGradient.Parent = SecondMainFrame
+
+local TweenService = game:GetService("TweenService")
+local rotationTween = TweenService:Create(
+    SecondMainUIGradient,
+    TweenInfo.new(3, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut, -1, true),
+    {Rotation = 360}
+)
+
+rotationTween:Play()
+-- -------------------------------------------------------------------------
+local SettingUIFrameUIGradient = Instance.new("UIGradient")
+SettingUIFrameUIGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 50, 50)) -- A softer gradient
+})
+SettingUIFrameUIGradient.Rotation = 0
+SettingUIFrameUIGradient.Parent = SettingUIFrame
+
+local TweenService = game:GetService("TweenService")
+local rotationTween = TweenService:Create(
+    SettingUIFrameUIGradient,
+    TweenInfo.new(3, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut, -1, true),
+    {Rotation = 360}
+)
+
+rotationTween:Play()
+
+-- UI -------------------------------------------- end
+
+-- Local Properties -------------------------------------------- start
+
+SecondMainFrame.Name = "ScriptFile"
+SecondMainFrame.Size = UDim2.new(0.5, 60, 0, 48)  -- Updated size
+SecondMainFrame.Position = UDim2.new(0, 0, 0, 0)  -- Updated position
+SecondMainFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
+SecondMainFrame.BackgroundTransparency = 0.4
+SecondMainFrame.Parent = MainFrame
+-- -------------------------------------------------------------------------
+SettingUIFrame.Name = "UISetting"
+SettingUIFrame.Size = UDim2.new(0, 58, 0, 48)
+SettingUIFrame.Position = UDim2.new(0, 0, 0, 0)
+SettingUIFrame.BackgroundColor3 = Color3.fromRGB(85, 255, 255)
+SettingUIFrame.BackgroundTransparency = 0.4
+SettingUIFrame.Parent = MainFrame
+-- -------------------------------------------------------------------------
+ToggleUISetting.Name = "ToggleUISetting"
+ToggleUISetting.Size = UDim2.new(0, 37, 0, 37)
+ToggleUISetting.Position = UDim2.new(0, 0, 0, 0)
+ToggleUISetting.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleUISetting.BackgroundTransparency = 0.8
+ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- The arrow pointing to the right
+ToggleUISetting.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+ToggleUI.Name = "AToggleUI"
+ToggleUI.Size = UDim2.new(0, 40, 0, 40)
+ToggleUI.Position = UDim2.new(0.57, 0, 0, 4)
+ToggleUI.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ToggleUI.BackgroundTransparency = 0.8
+ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
+ToggleUI.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
+ToggleUI.Parent = MainFrame
+-- -------------------------------------------------------------------------
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
+MainFrame.Position = UDim2.new(0.6, 0, 0, -47)  -- Initial position
+MainFrame.BackgroundTransparency = 1
+MainFrame.Parent = ShipuHub
+-- ------------------------------------------------------------------------
+HiddenFrame1.Name = "AFrame"
+HiddenFrame1.Size = UDim2.new(0, 5, 0, 30)
+HiddenFrame1.Position = UDim2.new(0, 0, 0, 0)
+HiddenFrame1.BackgroundTransparency = 1
+HiddenFrame1.Parent = SecondMainFrame
+-- -------------------------------------------------------------------------
+HiddenFrame2.Name = "ZFrame"
+HiddenFrame2.Size = UDim2.new(0, 5, 0, 30)
+HiddenFrame2.Position = UDim2.new(0, 0, 0, 0)
+HiddenFrame2.BackgroundTransparency = 1
+HiddenFrame2.Parent = SettingUIFrame
+-- -------------------------------------------------------------------------
+-- -------------------------------------------------------------------------
+
+-- Local Properties -------------------------------------------- end
+
+-- Script UI -------------------------------------------------------------------------
+local isOpen = false -- Track the toggle state
+local TweenService = game:GetService("TweenService")
+
+local function toggleUI()
+    if isOpen then
+        -- Close the SettingUIFrame
+        local closeTween = TweenService:Create(
+            SettingUIFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0, 58, 0, 48)}
+        )
+        closeTween:Play()
+
+        -- Fade out and change the image back to the right arrow
+        local closeImageTween = TweenService:Create(
+            ToggleUISetting,
+            TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {ImageTransparency = 1}
+        )
+        closeImageTween:Play()
+        
+        -- Wait for the fade-out to finish, then change the image
+        closeImageTween.Completed:Connect(function()
+            ToggleUISetting.Image = "rbxthumb://type=Asset&id=81494025675609&w=420&h=420" -- Arrow pointing to the right
+            -- Fade in the new image
+            local fadeInTween = TweenService:Create(
+                ToggleUISetting,
+                TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                {ImageTransparency = 0}
+            )
+            fadeInTween:Play()
+        end)
+
+        -- Hide ImageButton2 and ImageButton3 before the animation starts
+        ImageButton2.Visible = false
+        ImageButton3.Visible = false
+
+    else
+        -- Open the SettingUIFrame
+        local openTween = TweenService:Create(
+            SettingUIFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0.2, 25, 0, 48)}
+        )
+        openTween:Play()
+
+        -- Fade out and change the image to the left arrow
+        local openImageTween = TweenService:Create(
+            ToggleUISetting,
+            TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {ImageTransparency = 1}
+        )
+        openImageTween:Play()
+
+        -- Wait for the fade-out to finish, then change the image
+        openImageTween.Completed:Connect(function()
+            ToggleUISetting.Image = "rbxthumb://type=Asset&id=117802441000023&w=420&h=420" -- Arrow pointing to the left
+            -- Fade in the new image
+            local fadeInTween = TweenService:Create(
+                ToggleUISetting,
+                TweenInfo.new(0.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                {ImageTransparency = 0}
+            )
+            fadeInTween:Play()
+        end)
+
+        -- Show ImageButton2 and ImageButton3 after the animation finishes
+        openTween.Completed:Connect(function()
+            ImageButton2.Visible = true
+            ImageButton3.Visible = true
+        end)
+    end
+
+    -- Toggle the open state
+    isOpen = not isOpen
+end
+
+-- Connect the ToggleUISetting button to toggle functionality
+ToggleUISetting.MouseButton1Click:Connect(toggleUI)
+
+-- ----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+local isOpen = true -- Track the toggle state
+local TweenService = game:GetService("TweenService")
+
+local function toggleUI()
+    if isOpen then
+        -- Close the MainFrame (shrink it)
+        local closeTween = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0, 0, 0, 47)} -- Shrink the width
+        )
+        closeTween:Play()
+
+        -- Fade out SecondMainFrame and SettingUIFrame (make transparent)
+        local fadeTween2 = TweenService:Create(
+            SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 1}
+        )
+        fadeTween2:Play()
+
+        local fadeTween3 = TweenService:Create(
+            SettingUIFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 1}
+        )
+        fadeTween3:Play()
+
+        -- After fadeout completes, make the UI invisible
+        fadeTween3.Completed:Connect(function()
+            SecondMainFrame.Visible = false
+            SettingUIFrame.Visible = false
+        end)
+
+        -- Wait for the tween to finish and change the image
+        closeTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Reset to the default image
+        end)
+    else
+        -- Open the MainFrame (expand it)
+        local openTween = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0.4, 0, 0, 47)} -- Expand to original size
+        )
+        openTween:Play()
+
+        -- Make SecondMainFrame and SettingUIFrame visible first
+        SecondMainFrame.Visible = true
+        SettingUIFrame.Visible = true
+
+        -- Fade in SecondMainFrame and SettingUIFrame (make opaque)
+        local fadeTween2 = TweenService:Create(
+            SecondMainFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 0.4}
+        )
+        fadeTween2:Play()
+
+        local fadeTween3 = TweenService:Create(
+            SettingUIFrame,
+            TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {BackgroundTransparency = 0.4}
+        )
+        fadeTween3:Play()
+
+        -- Wait for the fade-in animation to finish and change the image
+        fadeTween3.Completed:Connect(function()
+            -- You can add any additional changes after fade-in finishes here if needed
+        end)
+
+        -- Wait for the tween to finish and change the image
+        openTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Set to the pressed image
+        end)
+    end
+
+    -- Toggle the open state
+    isOpen = not isOpen
+end
+
+-- Connect the ToggleUI ImageButton to toggle functionality
+ToggleUI.MouseButton1Click:Connect(toggleUI)
+
+-- ---------------------------------------------------------------------------------------------------------------------------------------------------
+-- Draggable function
+local function dragMain(dragpoint, gui)
+    local dragging
+    local dragStart = Vector3.new(0, 0, 0)
+    local startPos
+
+    -- Function to update the position during drag
+    local function update(input)
+        -- Check if startPos is valid before using it
+        if startPos then
+            local delta = input.Position - dragStart
+            -- Update the position of the GUI
+            local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale, gui.Position.Y.Offset)
+            gui.Position = newPos
+        end
+    end
+
+    -- Input handling
+    dragpoint.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = gui.Position -- Ensure startPos is assigned here
+
+            -- Reset dragging state when the input ends
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    -- Handle continuous movement when input changes
+    dragpoint.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            if dragging then
+                update(input)
+            end
+        end
+    end)
+end
+
+-- Apply the dragMain function to the MainFrame and ToggleUI
+dragMain(ToggleUI, MainFrame)
+dragMain(ToggleUI, UltraFrame)
+
+
+-- Script UI -------------------------------------------------------------------------
+-- Custom UI
+-- Create the AddScript ImageButton
+
+ImageButton3.Name = "Custom"
+ImageButton3.Size = UDim2.new(0, 37, 0, 37)
+ImageButton3.Position = UDim2.new(0, 0, 0, ToggleUISetting.Position.Y.Offset + ToggleUISetting.Size.Y.Offset)  -- Positioned after ToggleUISetting
+ImageButton3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ImageButton3.BackgroundTransparency = 0.8
+Imagebutton3.Visible = false
+ImageButton3.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
+ImageButton3.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
+ImageButton3.Parent = SettingUIFrame
+
+-- Apply UICorner to AddScript button
+local UICorner2 = Instance.new("UICorner")
+UICorner2.CornerRadius = UDim.new(10, 10)
+UICorner2.Parent = ImageButton2
+
+-- Input UI Frame--------------------------------------------------------------------------------------------------------------------------------------------------
+-- Create the AddScript ImageButton
+
+ImageButton2.Name = "AddScript"
+ImageButton2.Size = UDim2.new(0, 37, 0, 37)
+ImageButton2.Position = UDim2.new(0, 0, 0, ToggleUISetting.Position.Y.Offset + ToggleUISetting.Size.Y.Offset)  -- Positioned after ToggleUISetting
+ImageButton2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ImageButton2.BackgroundTransparency = 0.8
+ImageButton2.Visible = false
+ImageButton2.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
+ImageButton2.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
+ImageButton2.Parent = SettingUIFrame
+
+-- Apply UICorner to AddScript button
+local UICorner2 = Instance.new("UICorner")
+UICorner2.CornerRadius = UDim.new(10, 10)
+UICorner2.Parent = ImageButton2
+
+-- Create the InputFrame
+
+InputFrame.Name = "InputFrame"
+InputFrame.Size = UDim2.new(0.4, 0, 0.42, 0)
+InputFrame.Position = UDim2.new(0.3, 0, 0.2, 35)
+InputFrame.BackgroundColor3 = Color3.fromRGB(38, 41, 49)
+InputFrame.Visible = false
+InputFrame.BackgroundTransparency = 0.2
+InputFrame.Parent = ShipuHub
+
+-- Apply UICorner to InputFrame
+local UICornerFrame = Instance.new("UICorner")
+UICornerFrame.CornerRadius = UDim.new(0.05, 0)
+UICornerFrame.Parent = InputFrame
+
+-- Create TitleFrame in InputFrame
+
+TitleFrame.Name = "TitleFrame"
+TitleFrame.Text = "Enter Details\nComplete all the rules and use ImageID to upload your script."
+TitleFrame.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleFrame.TextSize = 16
+TitleFrame.Font = Enum.Font.GothamBold
+TitleFrame.TextWrapped = true
+TitleFrame.BackgroundTransparency = 1
+TitleFrame.Size = UDim2.new(0.9, 35, 0, 50)
+TitleFrame.Position = UDim2.new(0, 10, 0, 10)
+TitleFrame.Parent = InputFrame
+
+-- Create InputNameFrame in InputFrame
+
+InputNameFrame.Name = "InputNameFrame"
+InputNameFrame.Size = UDim2.new(1, -20, 0, 60)
+InputNameFrame.Position = UDim2.new(0, 10, 0, 70)
+InputNameFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 62)
+InputNameFrame.BorderColor3 = Color3.fromRGB(91, 92, 121)
+InputNameFrame.Parent = InputFrame
+
+-- Apply UICorner to InputNameFrame
+local UICornerName = Instance.new("UICorner")
+UICornerName.CornerRadius = UDim.new(0.2, 0)
+UICornerName.Parent = InputNameFrame
+
+-- TextLabel in InputNameFrame
+
+InputNameLabel.Text = "Enter Script Name"
+InputNameLabel.Size = UDim2.new(0.9, 35, 0, 20)
+InputNameLabel.Position = UDim2.new(0, 10, 0, 5)
+InputNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+InputNameLabel.Font = Enum.Font.GothamBold
+InputNameLabel.TextSize = 14
+InputNameLabel.BackgroundTransparency = 1
+InputNameLabel.Parent = InputNameFrame
+
+-- TextBox in InputNameBox
+
+InputNameBox.PlaceholderText = "Paste Name Script"
+InputNameBox.Text = "Paste Name Script"
+InputNameBox.Size = UDim2.new(0.9, 35, 0, 30)
+InputNameBox.Position = UDim2.new(0, 10, 0, 25)
+InputNameBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+InputNameBox.BackgroundTransparency = 1
+InputNameBox.TextTransparency = 0.5
+InputNameBox.TextSize = 14
+InputNameBox.TextScaled = true
+InputNameBox.Font = Enum.Font.GothamBold
+InputNameBox.BackgroundColor3 = Color3.fromRGB(45, 50, 62)
+InputNameBox.ClearTextOnFocus = true
+InputNameBox.Parent = InputNameFrame
+
+-- Create InputScript frame
+
+InputScriptFrame.Name = "InputScript"
+InputScriptFrame.Size = UDim2.new(1, -20, 0, 60)
+InputScriptFrame.Position = UDim2.new(0, 10, 0, 140)
+InputScriptFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 62)
+InputScriptFrame.BorderColor3 = Color3.fromRGB(91, 92, 121)
+InputScriptFrame.Parent = InputFrame
+
+-- Apply UICorner to InputScriptFrame
+local UICornerScript = Instance.new("UICorner")
+UICornerScript.CornerRadius = UDim.new(0.2, 0)
+UICornerScript.Parent = InputScriptFrame
+
+-- TextLabel in InputScriptFrame
+
+InputScriptLabel.Text = "Enter Script"
+InputScriptLabel.Size = UDim2.new(0.9, 35, 0, 20)
+InputScriptLabel.Position = UDim2.new(0, 10, 0, 5)
+InputScriptLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+InputScriptLabel.Font = Enum.Font.GothamBold
+InputScriptLabel.TextSize = 14
+InputScriptLabel.BackgroundTransparency = 1
+InputScriptLabel.Parent = InputScriptFrame
+
+-- TextBox in InputScriptFrame
+
+InputScriptTextBox.PlaceholderText = "Paste Here"
+InputScriptTextBox.Text = "Paste Here"
+InputScriptTextBox.Size = UDim2.new(0.9, 35, 0, 30)
+InputScriptTextBox.Position = UDim2.new(0, 10, 0, 25)
+InputScriptTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+InputScriptTextBox.BackgroundTransparency = 1
+InputScriptTextBox.TextTransparency = 0.5
+InputScriptTextBox.TextSize = 14
+InputScriptTextBox.Font = Enum.Font.GothamBold
+InputScriptTextBox.BackgroundColor3 = Color3.fromRGB(45, 50, 62)
+InputScriptTextBox.ClearTextOnFocus = true
+InputScriptTextBox.TextScaled = true
+InputScriptTextBox.Parent = InputScriptFrame
+
+-- Create AddScriptButton
+
+AddScriptButton.Name = "AddScriptButton"
+AddScriptButton.Size = UDim2.new(1, -20, 0, 40)
+AddScriptButton.Position = UDim2.new(0, 10, 0, 210)
+AddScriptButton.BackgroundColor3 = Color3.fromRGB(59, 139, 254)
+AddScriptButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AddScriptButton.Text = "Add Script"
+AddScriptButton.TextSize = 14
+AddScriptButton.Font = Enum.Font.GothamBold
+AddScriptButton.Parent = InputFrame
+
+-- Apply UICorner to AddScriptButton
+local UICornerButton = Instance.new("UICorner")
+UICornerButton.CornerRadius = UDim.new(0.2, 0)
+UICornerButton.Parent = AddScriptButton
+
+-- Create Close Button for InputFrame
+
+CloseButton.Name = "CloseButton"
+CloseButton.Size = UDim2.new(0, 20, 0, 20)
+CloseButton.Position = UDim2.new(0.9, 20, 0, 15)
+CloseButton.BackgroundTransparency = 1
+CloseButton.Image = "rbxassetid://13363121645"
+CloseButton.Parent = InputFrame
+
+-- When the AddScript button is pressed, InputFrame appears
+ImageButton2.MouseButton1Click:Connect(function()
+    InputFrame.Visible = true
+end)
+
+-- When the Close button is pressed, InputFrame is hidden
+CloseButton.MouseButton1Click:Connect(function()
+    InputFrame.Visible = false
+end)
+-- Input UI Frame--------------------------------------------------------------------------------------------------------------------------------------------------
+-- Script log v.2
