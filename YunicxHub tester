@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.5.3")
+print("Log v2.5.4")
 -- Try to Make Animasionn
 
 
@@ -187,7 +187,6 @@ ImageButton3.Size = UDim2.new(0, 37, 0, 37)
 ImageButton3.Position = UDim2.new(0, 0, 0, ToggleUISetting.Position.Y.Offset + ToggleUISetting.Size.Y.Offset)  -- Positioned after ToggleUISetting
 ImageButton3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ImageButton3.BackgroundTransparency = 0.8
-Imagebutton3.Visible = false
 ImageButton3.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
 ImageButton3.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
 ImageButton3.Parent = SettingUIFrame
@@ -203,7 +202,6 @@ ImageButton2.Size = UDim2.new(0, 37, 0, 37)
 ImageButton2.Position = UDim2.new(0, 0, 0, ToggleUISetting.Position.Y.Offset + ToggleUISetting.Size.Y.Offset)  -- Positioned after ToggleUISetting
 ImageButton2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ImageButton2.BackgroundTransparency = 0.8
-ImageButton2.Visible = false
 ImageButton2.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
 ImageButton2.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
 ImageButton2.Parent = SettingUIFrame
@@ -219,7 +217,6 @@ InputFrame.Name = "InputFrame"
 InputFrame.Size = UDim2.new(0.4, 0, 0.42, 0)
 InputFrame.Position = UDim2.new(0.3, 0, 0.2, 35)
 InputFrame.BackgroundColor3 = Color3.fromRGB(38, 41, 49)
-InputFrame.Visible = false
 InputFrame.BackgroundTransparency = 0.2
 InputFrame.Parent = ShipuHub
 
