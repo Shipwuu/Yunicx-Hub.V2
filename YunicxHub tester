@@ -43,6 +43,9 @@ local InputScriptTextBox = Instance.new("TextBox")
 local AddScriptButton = Instance.new("TextButton")
 local CloseButton = Instance.new("ImageButton")
 
+ImageButton2.Visible = false
+ImageButton3.Visible = false
+
 -- Local -------------------------------------------- end
 
 -- UI -------------------------------------------- start
@@ -217,8 +220,8 @@ local function toggleUI()
         end)
 
         -- Hide ImageButton2 and ImageButton3 before the animation starts
-        ImageButton2.Visible = true
-        ImageButton3.Visible = true
+        ImageButton2.Visible = false
+        ImageButton3.Visible = false
 
     else
         -- Open the SettingUIFrame
@@ -251,8 +254,8 @@ local function toggleUI()
 
         -- Show ImageButton2 and ImageButton3 after the animation finishes
         openTween.Completed:Connect(function()
-            ImageButton2.Visible = false
-            ImageButton3.Visible = false
+            ImageButton2.Visible = true
+            ImageButton3.Visible = true
         end)
     end
 
