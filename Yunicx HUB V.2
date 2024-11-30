@@ -8,21 +8,13 @@ local ShipuHub = Instance.new("ScreenGui")
 ShipuHub.Name = "ShipuHub"
 ShipuHub.Parent = game:GetService("CoreGui")
 
--- Step 2: Create the UltraFrame
-local UltraFrame = Instance.new("Frame")
-UltraFrame.Name = "UltraFrame"
-UltraFrame.Size = UDim2.new(1, 0, 0, 47)  -- Updated size
-UltraFrame.Position = UDim2.new(0, 0, 0, -47)  -- Updated position
-UltraFrame.BackgroundTransparency = 1
-UltraFrame.Parent = ShipuHub
-
 -- Step 3: Create MainFrame
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Size = UDim2.new(0.4, 0, 0, 47)  -- Initial size (collapsed)
-MainFrame.Position = UDim2.new(0.6, 0, 0, 0)  -- Initial position
+MainFrame.Position = UDim2.new(0.6, 0, 0, -47)  -- Initial position
 MainFrame.BackgroundTransparency = 1
-MainFrame.Parent = UltraFrame
+MainFrame.Parent = ShipuHub
 
 local MainLayout = Instance.new("UIListLayout")
 MainLayout.FillDirection = Enum.FillDirection.Horizontal
@@ -58,7 +50,7 @@ ToggleUI.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 ToggleUI.BackgroundTransparency = 0.8
 ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Default image
 ToggleUI.PressedImage = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Pressed image
-ToggleUI.Parent = UltraFrame
+ToggleUI.Parent = ShipuHub
 
 -- Apply UICorner to ToggleUI
 local UICornerButton = Instance.new("UICorner")
@@ -136,25 +128,33 @@ end
 
 -- Connect the ToggleUI ImageButton to toggle functionality
 ToggleUI.MouseButton1Click:Connect(toggleUI)
+
+
 -- Draggable function
 local function dragMain(dragpoint, gui)
     local dragging
     local dragStart = Vector3.new(0, 0, 0)
     local startPos
 
+    -- Function to update the position during drag
     local function update(input)
-        local delta = input.Position - dragStart
-        -- Update the position of the GUI
-        local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale, gui.Position.Y.Offset)
-        gui.Position = newPos
+        -- Check if startPos is valid before using it
+        if startPos then
+            local delta = input.Position - dragStart
+            -- Update the position of the GUI
+            local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale, gui.Position.Y.Offset)
+            gui.Position = newPos
+        end
     end
 
+    -- Input handling
     dragpoint.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             dragging = true
             dragStart = input.Position
-            startPos = gui.Position
+            startPos = gui.Position -- Ensure startPos is assigned here
 
+            -- Reset dragging state when the input ends
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
                     dragging = false
@@ -163,6 +163,7 @@ local function dragMain(dragpoint, gui)
         end
     end)
 
+    -- Handle continuous movement when input changes
     dragpoint.InputChanged:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
             if dragging then
