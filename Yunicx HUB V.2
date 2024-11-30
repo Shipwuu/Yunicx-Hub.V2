@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.4.6")
+print("Log v2.4.7")
 -- Try to Make Animasion
 
 
@@ -247,77 +247,6 @@ local TweenService = game:GetService("TweenService")
 
 local function toggleUI()
     if isOpen then
-        -- Close the MainFrame (shrink it)
-        local closeTween = TweenService:Create(
-            MainFrame,
-            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-            {Size = UDim2.new(0, 0, 0, 47)} -- Shrink the width
-        )
-        closeTween:Play()
-
-        -- Check and fade out Image in SecondMainFrame and SettingUIFrame if they exist
-        local secondMainImage = SecondMainFrame:FindFirstChildOfClass("ImageLabel") or (SecondMainFrame:FindFirstChildOfClass("ImageButton") and SecondMainFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"))
-        local settingUIFrameImage = SettingUIFrame:FindFirstChildOfClass("ImageLabel") or (SettingUIFrame:FindFirstChildOfClass("ImageButton") and SettingUIFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"))
-        
-        if secondMainImage then
-            local fadeImageTween2 = TweenService:Create(
-                secondMainImage,
-                TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-                {ImageTransparency = 1} -- Animate only the Image
-            )
-            fadeImageTween2:Play()
-        end
-        
-        if settingUIFrameImage then
-            local fadeImageTween3 = TweenService:Create(
-                settingUIFrameImage,
-                TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-                {ImageTransparency = 1} -- Animate only the Image
-            )
-            fadeImageTween3:Play()
-        end
-
-        -- Fade out children of SecondMainFrame and SettingUIFrame
-        for _, child in pairs(SecondMainFrame:GetChildren()) do
-            if child:IsA("Frame") then
-                local fadeChildTween = TweenService:Create(
-                    child,
-                    TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-                    {BackgroundTransparency = 1}
-                )
-                fadeChildTween:Play()
-            end
-        end
-
-        for _, child in pairs(SettingUIFrame:GetChildren()) do
-            if child:IsA("Frame") then
-                local fadeChildTween = TweenService:Create(
-                    child,
-                    TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
-                    {BackgroundTransparency = 1}
-                )
-                fadeChildTween:Play()
-            end
-        end
-
-        -- After fadeout completes, make the UI and children invisible
-        fadeImageTween3.Completed:Connect(function()
-            SecondMainFrame.Visible = false
-            SettingUIFrame.Visible = false
-            -- Also set children visibility to false after animation
-            for _, child in pairs(SecondMainFrame:GetChildren()) do
-                child.Visible = false
-            end
-            for _, child in pairs(SettingUIFrame:GetChildren()) do
-                child.Visible = false
-            end
-        end)
-
-        -- Wait for the tween to finish and change the image
-        closeTween.Completed:Connect(function()
-            ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Reset to the default image
-        end)
-    else
         -- Open the MainFrame (expand it)
         local openTween = TweenService:Create(
             MainFrame,
@@ -326,11 +255,11 @@ local function toggleUI()
         )
         openTween:Play()
 
-        -- Make SecondMainFrame and SettingUIFrame visible first
+        -- Set the parent frames to visible before animation
         SecondMainFrame.Visible = true
         SettingUIFrame.Visible = true
 
-        -- Check and fade in Image in SecondMainFrame and SettingUIFrame if they exist
+        -- Fade in Image in SecondMainFrame and SettingUIFrame if they exist
         local secondMainImage = SecondMainFrame:FindFirstChildOfClass("ImageLabel") or (SecondMainFrame:FindFirstChildOfClass("ImageButton") and SecondMainFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"))
         local settingUIFrameImage = SettingUIFrame:FindFirstChildOfClass("ImageLabel") or (SettingUIFrame:FindFirstChildOfClass("ImageButton") and SettingUIFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"))
 
@@ -378,6 +307,78 @@ local function toggleUI()
         -- Wait for the tween to finish and change the image
         openTween.Completed:Connect(function()
             ToggleUI.Image = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Set to the pressed image
+        end)
+
+    else
+        -- Close the MainFrame (shrink it)
+        local closeTween = TweenService:Create(
+            MainFrame,
+            TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+            {Size = UDim2.new(0, 0, 0, 47)} -- Shrink the width
+        )
+        closeTween:Play()
+
+        -- Fade out Image in SecondMainFrame and SettingUIFrame if they exist
+        local secondMainImage = SecondMainFrame:FindFirstChildOfClass("ImageLabel") or (SecondMainFrame:FindFirstChildOfClass("ImageButton") and SecondMainFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"))
+        local settingUIFrameImage = SettingUIFrame:FindFirstChildOfClass("ImageLabel") or (SettingUIFrame:FindFirstChildOfClass("ImageButton") and SettingUIFrame:FindFirstChildOfClass("ImageButton"):FindFirstChild("Image"))
+
+        if secondMainImage then
+            local fadeImageTween2 = TweenService:Create(
+                secondMainImage,
+                TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                {ImageTransparency = 1} -- Animate only the Image
+            )
+            fadeImageTween2:Play()
+        end
+
+        if settingUIFrameImage then
+            local fadeImageTween3 = TweenService:Create(
+                settingUIFrameImage,
+                TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                {ImageTransparency = 1} -- Animate only the Image
+            )
+            fadeImageTween3:Play()
+        end
+
+        -- Fade out children of SecondMainFrame and SettingUIFrame
+        for _, child in pairs(SecondMainFrame:GetChildren()) do
+            if child:IsA("Frame") then
+                local fadeChildTween = TweenService:Create(
+                    child,
+                    TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                    {BackgroundTransparency = 1}
+                )
+                fadeChildTween:Play()
+            end
+        end
+
+        for _, child in pairs(SettingUIFrame:GetChildren()) do
+            if child:IsA("Frame") then
+                local fadeChildTween = TweenService:Create(
+                    child,
+                    TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out),
+                    {BackgroundTransparency = 1}
+                )
+                fadeChildTween:Play()
+            end
+        end
+
+        -- After all animations finish, hide the parent frames
+        closeTween.Completed:Connect(function()
+            SecondMainFrame.Visible = false
+            SettingUIFrame.Visible = false
+            -- Also set children visibility to false after animation
+            for _, child in pairs(SecondMainFrame:GetChildren()) do
+                child.Visible = false
+            end
+            for _, child in pairs(SettingUIFrame:GetChildren()) do
+                child.Visible = false
+            end
+        end)
+
+        -- Wait for the tween to finish and change the image
+        closeTween.Completed:Connect(function()
+            ToggleUI.Image = "rbxthumb://type=Asset&id=110719997714211&w=420&h=420" -- Reset to the default image
         end)
     end
 
