@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.5.10")
+print("Log v2.5.11")
 -- Try to Make Animasionn
 
 
@@ -466,7 +466,6 @@ UICorner2.Parent = ImageButton2
 local button = Instance.new("ImageButton")
 button.Name = "OpenConsoleButton"
 button.Parent = SecondMainFrame
-button.Visible = true
 button.Position = UDim2.new(0, 0, 0, 0)
 button.Size = UDim2.new(0, 37, 0, 37)
 button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -490,7 +489,6 @@ local Players = game:GetService("Players")
 local button2 = Instance.new("ImageButton")
 button2.Name = "OpenConsoleButton"
 button2.Parent = SecondMainFrame
-button2.Visible = true
 button2.Position = UDim2.new(0, 0, 0, 0)
 button2.Size = UDim2.new(0, 37, 0, 37)
 button2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -514,7 +512,6 @@ local Players = game:GetService("Players")
 local button3 = Instance.new("ImageButton")
 button3.Name = "OpenConsoleButton"
 button3.Parent = SecondMainFrame
-button3.Visible = true
 button3.Position = UDim2.new(0, 0, 0, 0)
 button3.Size = UDim2.new(0, 37, 0, 37)
 button3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -538,7 +535,6 @@ local Players = game:GetService("Players")
 local button4 = Instance.new("ImageButton")
 button4.Name = "OpenConsoleButton"
 button4.Parent = SecondMainFrame
-button4.Visible = true
 button4.Position = UDim2.new(0, 0, 0, 0)
 button4.Size = UDim2.new(0, 37, 0, 37)
 button4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -562,7 +558,6 @@ local Players = game:GetService("Players")
 local button5 = Instance.new("ImageButton")
 button5.Name = "OpenConsoleButton"
 button5.Parent = SecondMainFrame
-button5.Visible = true
 button5.Position = UDim2.new(0, 0, 0, 0)
 button5.Size = UDim2.new(0, 37, 0, 37)
 button5.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -586,7 +581,6 @@ local Players = game:GetService("Players")
 local button6 = Instance.new("ImageButton")
 button6.Name = "OpenConsoleButton"
 button6.Parent = SecondMainFrame
-button6.Visible = true
 button6.Position = UDim2.new(0, 0, 0, 0)
 button6.Size = UDim2.new(0, 37, 0, 37)
 button6.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -610,7 +604,6 @@ local Players = game:GetService("Players")
 local button7 = Instance.new("ImageButton")
 button7.Name = "OpenConsoleButton"
 button7.Parent = SecondMainFrame
-button7.Visible = true
 button7.Position = UDim2.new(0, 0, 0, 0)
 button7.Size = UDim2.new(0, 37, 0, 37)
 button7.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
