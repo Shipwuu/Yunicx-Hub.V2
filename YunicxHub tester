@@ -586,4 +586,24 @@ CloseButton.MouseButton1Click:Connect(function()
 end)
 -- Input UI Frame--------------------------------------------------------------------------------------------------------------------------------------------------
 
+-- Create the button
+local button = Instance.new("ImageButton")
+button.Name = "OpenConsoleButton"
+button.Parent = SecondMainFrame
+button.Position = UDim2.new(0, 0, 0, 0)
+button.Size = UDim2.new(0, 37, 0, 37)
+button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button.BackgroundTransparency = 0.6
+button.Image = ""
+
+-- Add UICorner to make the button corners smooth
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(10, 10)  -- Adjust the corner radius to 5
+buttonCorner.Parent = button
+
+-- Function to open the console when the button is clicked
+button.MouseButton1Click:Connect(function()
+    StarterGui:SetCore("DevConsoleVisible", true)
+end)
+
 -- Script log v.2
