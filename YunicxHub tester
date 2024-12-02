@@ -603,7 +603,7 @@ buttonCorner.Parent = button
 
 -- Function to open the console when the button is clicked
 button.MouseButton1Click:Connect(function()
-    StarterGui:SetCore("DevConsoleVisible", true)
+    ShipuHub:SetCore("DevConsoleVisible", true)
 end)
 
 -- Script log v.2
