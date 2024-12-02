@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.5.6")
+print("Log v2.5.7")
 -- Try to Make Animasionn
 
 
@@ -275,6 +275,11 @@ local TweenService = game:GetService("TweenService")
 
 local function toggleUI()
     if isOpen then
+
+        -- Hide ImageButton2 and ImageButton3 before the animation starts
+        ImageButton2.Visible = false
+        ImageButton3.Visible = false
+
         -- Close the MainFrame (shrink it)
         local closeTween = TweenService:Create(
             MainFrame,
