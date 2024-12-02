@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.5.7")
+print("Log v2.5.8")
 -- Try to Make Animasionn
 
 
@@ -599,8 +599,8 @@ button.Parent = SecondMainFrame
 button.Position = UDim2.new(0, 0, 0, 0)
 button.Size = UDim2.new(0, 37, 0, 37)
 button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-button.BackgroundTransparency = 0.6
-button.Image = ""
+button.BackgroundTransparency = 0.8
+button.Image = "rbxthumb://type=Asset&id=103367531168758&w=420&h=420"
 
 -- Add UICorner to make the button corners smooth
 local buttonCorner = Instance.new("UICorner")
@@ -609,6 +609,144 @@ buttonCorner.Parent = button
 
 -- Function to open the console when the button is clicked
 button.MouseButton1Click:Connect(function()
+    StarterGui:SetCore("DevConsoleVisible", true)
+end)
+
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+
+-- Create the button
+local button2 = Instance.new("ImageButton")
+button2.Name = "OpenConsoleButton"
+button2.Parent = SecondMainFrame
+button2.Position = UDim2.new(0, 0, 0, 0)
+button2.Size = UDim2.new(0, 37, 0, 37)
+button2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button2.BackgroundTransparency = 0.8
+button2.Image = "rbxthumb://type=Asset&id=103367531168758&w=420&h=420"
+
+-- Add UICorner to make the button corners smooth
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(10, 10)  -- Adjust the corner radius to 5
+buttonCorner.Parent = button2
+
+-- Function to open the console when the button is clicked
+button2.MouseButton1Click:Connect(function()
+    StarterGui:SetCore("DevConsoleVisible", true)
+end)
+
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+
+-- Create the button
+local button3 = Instance.new("ImageButton")
+button3.Name = "OpenConsoleButton"
+button3.Parent = SecondMainFrame
+button3.Position = UDim2.new(0, 0, 0, 0)
+button3.Size = UDim2.new(0, 37, 0, 37)
+button3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button3.BackgroundTransparency = 0.8
+button3.Image = "rbxthumb://type=Asset&id=103367531168758&w=420&h=420"
+
+-- Add UICorner to make the button corners smooth
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(10, 10)  -- Adjust the corner radius to 5
+buttonCorner.Parent = button3
+
+-- Function to open the console when the button is clicked
+button3.MouseButton1Click:Connect(function()
+    StarterGui:SetCore("DevConsoleVisible", true)
+end)
+
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+
+-- Create the button
+local button4 = Instance.new("ImageButton")
+button4.Name = "OpenConsoleButton"
+button4.Parent = SecondMainFrame
+button4.Position = UDim2.new(0, 0, 0, 0)
+button4.Size = UDim2.new(0, 37, 0, 37)
+button4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button4.BackgroundTransparency = 0.8
+button4.Image = "rbxthumb://type=Asset&id=103367531168758&w=420&h=420"
+
+-- Add UICorner to make the button corners smooth
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(10, 10)  -- Adjust the corner radius to 5
+buttonCorner.Parent = button4
+
+-- Function to open the console when the button is clicked
+button4.MouseButton1Click:Connect(function()
+    StarterGui:SetCore("DevConsoleVisible", true)
+end)
+
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+
+-- Create the button
+local button5 = Instance.new("ImageButton")
+button5.Name = "OpenConsoleButton"
+button5.Parent = SecondMainFrame
+button5.Position = UDim2.new(0, 0, 0, 0)
+button5.Size = UDim2.new(0, 37, 0, 37)
+button5.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button5.BackgroundTransparency = 0.8
+button5.Image = "rbxthumb://type=Asset&id=103367531168758&w=420&h=420"
+
+-- Add UICorner to make the button corners smooth
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(10, 10)  -- Adjust the corner radius to 5
+buttonCorner.Parent = button5
+
+-- Function to open the console when the button is clicked
+button5.MouseButton1Click:Connect(function()
+    StarterGui:SetCore("DevConsoleVisible", true)
+end)
+
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+
+-- Create the button
+local button6 = Instance.new("ImageButton")
+button6.Name = "OpenConsoleButton"
+button6.Parent = SecondMainFrame
+button6.Position = UDim2.new(0, 0, 0, 0)
+button6.Size = UDim2.new(0, 37, 0, 37)
+button6.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button6.BackgroundTransparency = 0.8
+button6.Image = "rbxthumb://type=Asset&id=103367531168758&w=420&h=420"
+
+-- Add UICorner to make the button corners smooth
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(10, 10)  -- Adjust the corner radius to 5
+buttonCorner.Parent = button6
+
+-- Function to open the console when the button is clicked
+button6.MouseButton1Click:Connect(function()
+    StarterGui:SetCore("DevConsoleVisible", true)
+end)
+
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+
+-- Create the button
+local button7 = Instance.new("ImageButton")
+button7.Name = "OpenConsoleButton"
+button7.Parent = SecondMainFrame
+button7.Position = UDim2.new(0, 0, 0, 0)
+button7.Size = UDim2.new(0, 37, 0, 37)
+button7.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button7.BackgroundTransparency = 0.8
+button7.Image = "rbxthumb://type=Asset&id=103367531168758&w=420&h=420"
+
+-- Add UICorner to make the button corners smooth
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(10, 10)  -- Adjust the corner radius to 5
+buttonCorner.Parent = button7
+
+-- Function to open the console when the button is clicked
+button7.MouseButton1Click:Connect(function()
     StarterGui:SetCore("DevConsoleVisible", true)
 end)
 
