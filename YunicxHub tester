@@ -493,8 +493,6 @@ local function toggleUI()
         -- Make SecondMainFrame and SettingUIFrame visible first
         SecondMainFrame.Visible = true
         SettingUIFrame.Visible = true
-        ImageButton2.Visible = true
-        ImageButton3.Visible = true
         button.Visible = true
         button2.Visible = true
         button3.Visible = true
