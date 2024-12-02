@@ -1,6 +1,6 @@
 -- Script log v.2
 
-print("Log v2.5.8")
+print("Log v2.5.9")
 -- Try to Make Animasionn
 
 
@@ -279,6 +279,13 @@ local function toggleUI()
         -- Hide ImageButton2 and ImageButton3 before the animation starts
         ImageButton2.Visible = false
         ImageButton3.Visible = false
+        button.Visible = false
+        button2.Visible = false
+        button3.Visible = false            
+        button4.Visible = false
+        button5.Visible = false
+        button6.Visible = false
+        button7.Visible = false
 
         -- Close the MainFrame (shrink it)
         local closeTween = TweenService:Create(
@@ -349,6 +356,20 @@ local function toggleUI()
         -- Wait for the tween to finish and change the image
         openTween.Completed:Connect(function()
             ToggleUI.Image = "rbxthumb://type=Asset&id=129960511211863&w=420&h=420" -- Set to the pressed image
+        end)
+    end
+
+        -- Show ImageButton2 and ImageButton3 after the animation finishes
+        openTween.Completed:Connect(function()
+            ImageButton2.Visible = true
+            ImageButton3.Visible = true
+            button.Visible = true
+            button2.Visible = true
+            button3.Visible = true
+            button4.Visible = true
+            button5.Visible = true
+            button6.Visible = true
+            button7.Visible = true
         end)
     end
 
