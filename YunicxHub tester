@@ -46,6 +46,13 @@ local CloseButton = Instance.new("ImageButton")
 
 ImageButton2.Visible = false
 ImageButton3.Visible = false
+button.Visible = true
+button2.Visible = true
+button3.Visible = true
+button4.Visible = true
+button5.Visible = true
+button6.Visible = true
+button7.Visible = true
 
 -- Local -------------------------------------------- end
 
