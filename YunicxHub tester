@@ -23,6 +23,7 @@ ShipuHub.Parent = game:GetService("CoreGui")
 
 -- Local -------------------------------------------- start
 
+local StarterGui = game:GetService("StarterGui")
 local MainFrame = Instance.new("Frame")
 local SecondMainFrame = Instance.new("Frame")
 local SettingUIFrame = Instance.new("Frame")
@@ -603,7 +604,10 @@ buttonCorner.Parent = button
 
 -- Function to open the console when the button is clicked
 button.MouseButton1Click:Connect(function()
-    ShipuHub:SetCore("DevConsoleVisible", true)
+    StarterGui:SetCore("DevConsoleVisible", true)
 end)
+
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
 
 -- Script log v.2
